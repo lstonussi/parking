@@ -1,11 +1,11 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'parking_lots_impl.dart';
+part of 'parking_config_dao_impl.dart';
 
 // **************************************************************************
 // DaoGenerator
 // **************************************************************************
 
-mixin _$ParkingLotsImplMixin on DatabaseAccessor<Database> {
-  $ParkingLotsTable get parkingLots => attachedDatabase.parkingLots;
+mixin _$ParkingConfigDaoImplMixin on DatabaseAccessor<Database> {
+  $ParkingConfigTable get parkingConfig => attachedDatabase.parkingConfig;
 }

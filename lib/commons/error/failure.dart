@@ -15,6 +15,8 @@ class InsertDataBaseFailure extends Failure {}
 
 class SelectDataBaseFailure extends Failure {}
 
+class DeleteDataBaseFailure extends Failure {}
+
 class GenericFailure extends Failure {
   const GenericFailure({
     this.message,

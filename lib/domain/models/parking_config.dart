@@ -15,9 +15,9 @@ class ParkingConfig extends Equatable {
 
   Map<String, dynamic> toJson() => _$ParkingConfigToJson(this);
 
-  final int id;
-  final String name;
-  final int spaceQuantity;
+  final int? id;
+  final String? name;
+  final int? spaceQuantity;
 
   @override
   List<Object?> get props => [id, name, spaceQuantity];
