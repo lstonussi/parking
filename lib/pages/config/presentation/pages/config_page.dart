@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:parking/bloc/parking_bloc.dart';
+import 'package:parking/pages/config/presentation/bloc/config_bloc.dart';
 import 'package:parking/utils/validators.dart';
 import 'package:parking/values/app_texts.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +14,7 @@ class ConfigPage extends StatelessWidget {
     final FocusNode _nameFocus = FocusNode(), _quantityFocus = FocusNode();
     final TextEditingController _nameController = TextEditingController(),
         _quantityController = TextEditingController();
-    final _bloc = context.read<ParkingBloc>();
+    final _bloc = context.read<ConfigBloc>();
     return Scaffold(
       appBar: AppBar(title: const Text('Parking')),
       body: LayoutBuilder(

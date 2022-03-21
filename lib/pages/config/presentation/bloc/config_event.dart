@@ -1,13 +1,13 @@
-part of 'parking_bloc.dart';
+part of 'config_bloc.dart';
 
-abstract class ParkingEvent extends Equatable {
-  const ParkingEvent();
+abstract class ConfigEvent extends Equatable {
+  const ConfigEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class SaveConfigForm extends ParkingEvent {
+class SaveConfigForm extends ConfigEvent {
   const SaveConfigForm({
     required this.name,
     required this.parkingSpace,
@@ -20,7 +20,7 @@ class SaveConfigForm extends ParkingEvent {
   String toString() => 'SaveConfigForm';
 }
 
-class IsAlreadyConfigured extends ParkingEvent {
+class IsAlreadyConfigured extends ConfigEvent {
   @override
   String toString() => 'IsAlreadyConfigured';
 }

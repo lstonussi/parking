@@ -2,11 +2,11 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:parking/repositories/parking_config_repository.dart';
 
-part 'parking_event.dart';
-part 'parking_state.dart';
+part 'config_event.dart';
+part 'config_state.dart';
 
-class ParkingBloc extends Bloc<ParkingEvent, ParkingState> {
-  ParkingBloc({
+class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
+  ConfigBloc({
     required this.parkingConfigRepository,
   }) : super(Idle()) {
     on<IsAlreadyConfigured>(_onIsAlreadyConfigured);
@@ -16,7 +16,7 @@ class ParkingBloc extends Bloc<ParkingEvent, ParkingState> {
   final ParkingConfigRepository parkingConfigRepository;
 
   Future<void> _onSavedForm(
-      SaveConfigForm event, Emitter<ParkingState> emit) async {
+      SaveConfigForm event, Emitter<ConfigState> emit) async {
     emit(Loading());
 
     final resultOrFailure = await parkingConfigRepository.insert(
@@ -33,7 +33,7 @@ class ParkingBloc extends Bloc<ParkingEvent, ParkingState> {
   }
 
   Future<void> _onIsAlreadyConfigured(
-      ParkingEvent event, Emitter<ParkingState> emit) async {
+      ConfigEvent event, Emitter<ConfigState> emit) async {
     emit(Loading());
     final resultOrFailure = await parkingConfigRepository.getConfig();
     resultOrFailure.fold(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:parking/bloc/parking_bloc.dart';
+import 'package:parking/pages/config/presentation/bloc/config_bloc.dart';
 import 'package:parking/pages/config/presentation/pages/config_page.dart';
 import 'package:parking/pages/home/presentation/pages/home_page.dart';
 
@@ -21,7 +21,7 @@ class _HomeOrConfig extends State<HomeOrConfig> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ParkingBloc, ParkingState>(
+    return BlocBuilder<ConfigBloc, ConfigState>(
       builder: ((context, state) {
         if (state is Loading) {
           return const Center(
