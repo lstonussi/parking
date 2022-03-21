@@ -8,9 +8,9 @@ part of 'parking_config.dart';
 
 ParkingConfig _$ParkingConfigFromJson(Map<String, dynamic> json) =>
     ParkingConfig(
-      id: json['id'] as int,
-      name: json['name'] as String,
-      spaceQuantity: json['spaceQuantity'] as int,
+      id: json['id'] as int?,
+      name: json['name'] as String?,
+      spaceQuantity: json['spaceQuantity'] as int?,
     );
 
 Map<String, dynamic> _$ParkingConfigToJson(ParkingConfig instance) =>

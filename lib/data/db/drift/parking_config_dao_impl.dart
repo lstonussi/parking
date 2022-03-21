@@ -30,13 +30,12 @@ class ParkingConfigDaoImpl extends DatabaseAccessor<Database>
   }
 
   @override
-  Future<int> insert(ParkingConfig parking) async {
+  Future<int> insert({required String name, required int quantitySpace}) async {
     try {
       return await into(parkingConfig).insertOnConflictUpdate(
         ParkingConfigCompanion.insert(
-          id: Value(parking.id!),
-          name: parking.name!,
-          spaceQuantity: parking.spaceQuantity!,
+          name: name,
+          spaceQuantity: quantitySpace,
         ),
       );
     } on SqliteException {

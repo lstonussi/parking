@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:parking/pages/initial_config/presentation/pages/initial_config.dart';
-import 'package:parking/repositories/parking_config_repository.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:parking/bloc/parking_bloc.dart';
+import 'package:parking/pages/config/presentation/pages/config_page.dart';
+import 'package:parking/pages/home/presentation/pages/home_page.dart';
 
 class HomeOrConfig extends StatefulWidget {
   const HomeOrConfig({Key? key}) : super(key: key);
@@ -16,28 +17,25 @@ class _HomeOrConfig extends State<HomeOrConfig> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      _getData();
-    });
-  }
-
-  //Adicionar bloc
-  Future<void> _getData() async {
-    final parkingConfig = context.read<ParkingConfigRepository>();
-    final resultOrFailure = await parkingConfig.getConfig();
-    resultOrFailure.fold((error) => null, (parkingConfig) {
-      setState(() {
-        isFirstAcess = (parkingConfig.id ?? 0) == 0;
-      });
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return isFirstAcess
-        ? const InitialConfig()
-        : Container(
-            color: Colors.red,
+    return BlocBuilder<ParkingBloc, ParkingState>(
+      builder: ((context, state) {
+        if (state is Loading) {
+          return const Center(
+            child: CircularProgressIndicator(),
           );
+        } else if (state is NotConfigured) {
+          return const ConfigPage();
+        } else if (state is AlreadyConfigured) {
+          return const HomePage();
+        }
+        return const Center(
+          child: Text('Error'),
+        );
+      }),
+    );
   }
 }

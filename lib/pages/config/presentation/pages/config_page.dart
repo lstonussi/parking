@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:parking/bloc/parking_bloc.dart';
 import 'package:parking/utils/validators.dart';
 import 'package:parking/values/app_texts.dart';
+import 'package:provider/provider.dart';
 
-class InitialConfig extends StatelessWidget {
-  const InitialConfig({Key? key}) : super(key: key);
+class ConfigPage extends StatelessWidget {
+  const ConfigPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
     final FocusNode _nameFocus = FocusNode(), _quantityFocus = FocusNode();
-
+    final TextEditingController _nameController = TextEditingController(),
+        _quantityController = TextEditingController();
+    final _bloc = context.read<ParkingBloc>();
     return Scaffold(
       appBar: AppBar(title: const Text('Parking')),
       body: LayoutBuilder(
@@ -26,6 +30,7 @@ class InitialConfig extends StatelessWidget {
                   children: [
                     TextFormField(
                       focusNode: _nameFocus,
+                      controller: _nameController,
                       decoration: const InputDecoration(
                         label: Text(AppTexts.parkingName),
                       ),
@@ -35,6 +40,7 @@ class InitialConfig extends StatelessWidget {
                     ),
                     TextFormField(
                       focusNode: _quantityFocus,
+                      controller: _quantityController,
                       keyboardType: TextInputType.number,
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly
@@ -61,20 +67,12 @@ class InitialConfig extends StatelessWidget {
               ),
               onPressed: () {
                 if (_formKey.currentState?.validate() ?? false) {
-                  // if (widget.emailController.text.contains('@facebook')) {
-                  //   showSMMessageDialog(
-                  //     context: context,
-                  //     title: UITexts.confirmEmail,
-                  //     description:
-                  //         '${UITexts.theEmail} ${widget.emailController.text} ${UITexts.isRightforContact}',
-                  //     positiveItem: UITexts.yes,
-                  //     positiveAction: () => _request(),
-                  //     negativeItem: UITexts.no,
-                  //     negativeAction: () {},
-                  //   );
-                  // } else {
-                  //   _request();
-                  // }
+                  _bloc.add(
+                    SaveConfigForm(
+                      name: _nameController.text,
+                      parkingSpace: int.parse(_quantityController.text),
+                    ),
+                  );
                 }
               },
               child: const Text(

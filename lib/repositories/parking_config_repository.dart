@@ -10,9 +10,13 @@ class ParkingConfigRepository {
   });
   final ParkingConfigDAO parkingConfigDAO;
 
-  Future<Either<Failure, int>> insert(ParkingConfig parkingConfig) async {
+  Future<Either<Failure, int>> insert(
+      {required String name, required int quantitySpace}) async {
     try {
-      final result = await parkingConfigDAO.insert(parkingConfig);
+      final result = await parkingConfigDAO.insert(
+        name: name,
+        quantitySpace: quantitySpace,
+      );
       return Right(result);
     } on InsertException {
       return Left(InsertDataBaseFailure());
