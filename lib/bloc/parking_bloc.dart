@@ -25,9 +25,9 @@ class ParkingBloc extends Bloc<ParkingEvent, ParkingState> {
     );
 
     resultOrFailure.fold(
-      (error) => null,
+      (error) => emit(SaveError()),
       (parkingConfig) {
-        emit(Loaded());
+        emit(Saved());
       },
     );
   }

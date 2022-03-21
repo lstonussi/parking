@@ -11,7 +11,9 @@ class Idle extends ParkingState {}
 
 class Loading extends ParkingState {}
 
-class Loaded extends ParkingState {}
+class Saved extends ParkingState {}
+
+class SaveError extends ParkingState {}
 
 class NotConfigured extends ParkingState {}
 

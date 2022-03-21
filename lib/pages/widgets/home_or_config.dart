@@ -29,11 +29,19 @@ class _HomeOrConfig extends State<HomeOrConfig> {
           );
         } else if (state is NotConfigured) {
           return const ConfigPage();
-        } else if (state is AlreadyConfigured) {
+        } else if (state is AlreadyConfigured || state is Saved) {
           return const HomePage();
+        } else if (state is SaveError) {
+          const Material(
+            child: Center(
+              child: Text('Error'),
+            ),
+          );
         }
-        return const Center(
-          child: Text('Error'),
+        return const Material(
+          child: Center(
+            child: Text('Error'),
+          ),
         );
       }),
     );
