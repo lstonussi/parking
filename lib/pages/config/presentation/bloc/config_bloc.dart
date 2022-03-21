@@ -38,22 +38,22 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
       ConfigEvent event, Emitter<ConfigState> emit) async {
     emit(Loading());
     final resultOrFailure = await parkingConfigRepository.getConfig();
-    resultOrFailure.fold(
-      (error) => null,
-      (parkingConfig) {
-        if (parkingConfig.id != null &&
-            parkingConfig.name != null &&
-            parkingConfig.spaceQuantity != null) {
-          emit(
-            AlreadyConfigured(
+    emit(
+      resultOrFailure.fold(
+        (error) => Error(),
+        (parkingConfig) {
+          if (parkingConfig.id != null &&
+              parkingConfig.name != null &&
+              parkingConfig.spaceQuantity != null) {
+            return AlreadyConfigured(
               name: parkingConfig.name!,
               quantitySpace: parkingConfig.spaceQuantity!,
-            ),
-          );
-        } else {
-          emit(NotConfigured());
-        }
-      },
+            );
+          } else {
+            return NotConfigured();
+          }
+        },
+      ),
     );
   }
 }

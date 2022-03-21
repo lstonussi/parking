@@ -15,6 +15,8 @@ class Saved extends ConfigState {}
 
 class SaveError extends ConfigState {}
 
+class Error extends ConfigState {}
+
 class NotConfigured extends ConfigState {}
 
 class AlreadyConfigured extends ConfigState {

@@ -21,6 +21,8 @@ dependencies:
   json_serializable: ^6.1.5
   dartz: ^0.10.1
   flutter_bloc: ^8.0.1
+  intl: ^0.17.0
+
 dev_dependencies:
   bloc_test: ^9.0.2
   build_runner: ^2.1.8
