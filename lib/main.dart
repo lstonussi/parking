@@ -9,6 +9,8 @@ import 'package:parking/repositories/parking_config_repository.dart';
 import 'package:parking/repositories/parking_lots_repository.dart';
 import 'package:provider/provider.dart';
 
+import 'pages/config/presentation/bloc/config_event.dart';
+
 void main() async {
   // final dbPath = await DatabaseUtil.instance.getDBPath();
   final _database = Database.instance;

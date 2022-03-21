@@ -1,23 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parking/pages/config/presentation/bloc/config_bloc.dart';
+import 'package:parking/pages/config/presentation/bloc/config_state.dart';
 import 'package:parking/pages/config/presentation/pages/config_page.dart';
 import 'package:parking/pages/home/presentation/pages/home_page.dart';
 
-class HomeOrConfig extends StatefulWidget {
+class HomeOrConfig extends StatelessWidget {
   const HomeOrConfig({Key? key}) : super(key: key);
-
-  @override
-  State<HomeOrConfig> createState() => _HomeOrConfig();
-}
-
-bool isFirstAcess = false;
-
-class _HomeOrConfig extends State<HomeOrConfig> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +18,12 @@ class _HomeOrConfig extends State<HomeOrConfig> {
           );
         } else if (state is NotConfigured) {
           return const ConfigPage();
-        } else if (state is AlreadyConfigured || state is Saved) {
-          return const HomePage();
+        } else if (state is AlreadyConfigured) {
+          return HomePage(
+            name: state.name,
+            quantitySpace: state.quantitySpace,
+          );
+        } else if (state is Saved) {
         } else if (state is SaveError) {
           const Material(
             child: Center(

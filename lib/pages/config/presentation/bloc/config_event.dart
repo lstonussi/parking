@@ -1,4 +1,4 @@
-part of 'config_bloc.dart';
+import 'package:equatable/equatable.dart';
 
 abstract class ConfigEvent extends Equatable {
   const ConfigEvent();
@@ -10,11 +10,11 @@ abstract class ConfigEvent extends Equatable {
 class SaveConfigForm extends ConfigEvent {
   const SaveConfigForm({
     required this.name,
-    required this.parkingSpace,
+    required this.quantitySpace,
   });
 
   final String name;
-  final int parkingSpace;
+  final int quantitySpace;
 
   @override
   String toString() => 'SaveConfigForm';

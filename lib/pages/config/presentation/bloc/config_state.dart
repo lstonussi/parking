@@ -1,4 +1,4 @@
-part of 'config_bloc.dart';
+import 'package:equatable/equatable.dart';
 
 abstract class ConfigState extends Equatable {
   const ConfigState();
@@ -17,4 +17,11 @@ class SaveError extends ConfigState {}
 
 class NotConfigured extends ConfigState {}
 
-class AlreadyConfigured extends ConfigState {}
+class AlreadyConfigured extends ConfigState {
+  const AlreadyConfigured({
+    required this.name,
+    required this.quantitySpace,
+  });
+  final String name;
+  final int quantitySpace;
+}

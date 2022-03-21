@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:parking/pages/config/presentation/bloc/config_bloc.dart';
+import 'package:parking/pages/config/presentation/bloc/_bloc.dart';
 import 'package:parking/utils/validators.dart';
 import 'package:parking/values/app_texts.dart';
 import 'package:provider/provider.dart';
@@ -70,7 +70,7 @@ class ConfigPage extends StatelessWidget {
                   _bloc.add(
                     SaveConfigForm(
                       name: _nameController.text,
-                      parkingSpace: int.parse(_quantityController.text),
+                      quantitySpace: int.parse(_quantityController.text),
                     ),
                   );
                 }
