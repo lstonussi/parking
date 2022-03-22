@@ -8,27 +8,20 @@ class ParkingSpace extends StatelessWidget {
   const ParkingSpace({
     Key? key,
     required this.index,
-    this.color = Colors.red,
-    // required this.parkingLots,
+    required this.parkingLots,
   }) : super(key: key);
 
   final int index;
-  final Color color;
-  // final List<ParkingLots> parkingLots;
+  final List<ParkingLots> parkingLots;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text('$index'),
-      color: color,
+      child: Text('${index + 1}'),
+      color: parkingLots.any((element) => element.spaceParkingCode == index + 1)
+          ? Colors.red
+          : Colors.green,
     );
-    // return Container(
-    //   color: parkingLots[index].spaceParkingCode == index
-    //       ? Colors.red
-    //       : Colors.green,
-    //   width: 10,
-    //   height: 10,
-    // );
   }
 }
 

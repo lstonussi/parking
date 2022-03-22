@@ -55,6 +55,7 @@ class HomePage extends StatelessWidget {
               (index) {
                 return ParkingSpace(
                   index: index,
+                  parkingLots: state.parkingLots,
                 );
               },
             );
