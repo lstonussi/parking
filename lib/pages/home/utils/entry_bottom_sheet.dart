@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:parking/pages/home/presentation/bloc/_bloc.dart';
 import 'package:parking/utils/validators.dart';
 import 'package:parking/values/app_texts.dart';
+import 'package:provider/provider.dart';
 
 final _formKey = GlobalKey<FormState>();
 final FocusNode _plateFocus = FocusNode(),
@@ -17,9 +18,10 @@ final TextEditingController _plateController = TextEditingController(),
     _entryHourController = TextEditingController(),
     _spaceParkingCodeController = TextEditingController(),
     _departureController = TextEditingController();
-DateFormat dateFormat = DateFormat("HH:mm:ss");
+DateFormat dateFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
 
-void showEntryBottomSheet(BuildContext context, HomeBloc bloc) {
+void showEntryBottomSheet(BuildContext context) {
+  final _bloc = context.read<HomeBloc>();
   showModalBottomSheet(
     context: context,
     useRootNavigator: true,
@@ -112,7 +114,7 @@ void showEntryBottomSheet(BuildContext context, HomeBloc bloc) {
                       ),
                       onPressed: () {
                         if (_formKey.currentState?.validate() ?? false) {
-                          bloc.add(
+                          _bloc.add(
                             NewCarEntry(
                               plate: _plateController.text,
                               modelCar: _modelCarController.text,
@@ -124,6 +126,11 @@ void showEntryBottomSheet(BuildContext context, HomeBloc bloc) {
                               ),
                             ),
                           );
+                          _plateController.clear();
+                          _modelCarController.clear();
+                          _entryHourController.clear();
+                          _spaceParkingCodeController.clear();
+                          Navigator.pop(context);
                         }
                       },
                       child: const Text(

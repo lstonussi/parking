@@ -25,11 +25,10 @@ class HomePage extends StatelessWidget {
         title: Text(name),
         actions: [
           IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              showEntryBottomSheet(context, _bloc);
-            },
-          ),
+              icon: const Icon(Icons.add),
+              onPressed: () {
+                showEntryBottomSheet(context);
+              }),
           IconButton(
             icon: const Icon(Icons.view_comfortable),
             onPressed: () {
@@ -51,7 +50,7 @@ class HomePage extends StatelessWidget {
           }
           if (state is LoadedParkingLots) {
             final listWidget = List.generate(
-              30,
+              quantitySpace,
               (index) {
                 return ParkingSpace(
                   index: index,
@@ -68,29 +67,23 @@ class HomePage extends StatelessWidget {
                 padding: EdgeInsets.symmetric(
                   horizontal: (contraints.maxWidth * .1),
                 ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Column(
-                        children: [
-                          Center(
-                            child: Text(
-                              '${AppTexts.parkingSpaceAvaible} ${(quantitySpace - state.parkingLots.length).toString()}',
-                            ),
-                          ),
-                          GridView.count(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            crossAxisCount: 3,
-                            mainAxisSpacing: 10,
-                            crossAxisSpacing: 10,
-                            children: listWidget,
-                          )
-                        ],
+                child: Column(
+                  children: [
+                    Center(
+                      child: Text(
+                        '${AppTexts.parkingSpaceAvaible} ${(quantitySpace - state.parkingLots.length).toString()}',
                       ),
-                    ],
-                  ),
+                    ),
+                    Expanded(
+                        child: GridView.count(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      crossAxisCount: 3,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                      children: listWidget,
+                    )),
+                  ],
                 ),
               ),
             );
