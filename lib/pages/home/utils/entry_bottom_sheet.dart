@@ -3,24 +3,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:parking/pages/home/presentation/bloc/_bloc.dart';
+import 'package:parking/pages/home/presentation/notifiers/parking_space_notifier.dart';
+import 'package:parking/pages/home/utils/verify_parking_space.dart';
 import 'package:parking/utils/validators.dart';
 import 'package:parking/values/app_texts.dart';
 import 'package:provider/provider.dart';
 
-final _formKey = GlobalKey<FormState>();
-final FocusNode _plateFocus = FocusNode(),
-    _modelCarFocus = FocusNode(),
-    _entryHourFocus = FocusNode(),
-    _spaceParkingCodeFocus = FocusNode(),
-    _departureHourFocus = FocusNode();
-final TextEditingController _plateController = TextEditingController(),
-    _modelCarController = TextEditingController(),
-    _entryHourController = TextEditingController(),
-    _spaceParkingCodeController = TextEditingController(),
-    _departureController = TextEditingController();
-DateFormat dateFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
-
-void showEntryBottomSheet(BuildContext context) {
+void showEntryBottomSheet({
+  required BuildContext context,
+  int? parkingSpace,
+}) {
+  final _formKey = GlobalKey<FormState>();
+  final FocusNode _plateFocus = FocusNode(),
+      _modelCarFocus = FocusNode(),
+      _entryHourFocus = FocusNode(),
+      _spaceParkingCodeFocus = FocusNode(),
+      _departureHourFocus = FocusNode();
+  final TextEditingController _plateController = TextEditingController(),
+      _modelCarController = TextEditingController(),
+      _entryHourController = TextEditingController(),
+      _spaceParkingCodeController = TextEditingController(),
+      _departureController = TextEditingController();
+  DateFormat dateFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
+  _entryHourController.text = dateFormat.format(DateTime.now());
+  if (parkingSpace != null) {
+    _spaceParkingCodeController.text = parkingSpace.toString();
+  }
   final _bloc = context.read<HomeBloc>();
   showModalBottomSheet(
     context: context,
@@ -83,7 +91,6 @@ void showEntryBottomSheet(BuildContext context) {
                         validator: (value) {
                           return validateFormEmptyText(value.toString());
                         },
-                        initialValue: DateTime.now(),
                         format: DateFormat('dd/MM/yyyy HH:mm:ss'),
                         onShowPicker: (BuildContext context,
                             DateTime? currentValue) async {
@@ -112,8 +119,24 @@ void showEntryBottomSheet(BuildContext context) {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState?.validate() ?? false) {
+                          final list =
+                              context.read<ParkingSpaceNotifier>().list;
+                          if (verifyParkingSpace(
+                                  parkingLots: list,
+                                  index: int.parse(
+                                          _spaceParkingCodeController.text) -
+                                      1) >
+                              -1) {
+                            await showDialog(
+                              context: context,
+                              builder: (context) => const AlertDialog(
+                                content: Text("Vaga Ocupada"),
+                              ),
+                            );
+                            return;
+                          }
                           _bloc.add(
                             NewCarEntry(
                               plate: _plateController.text,

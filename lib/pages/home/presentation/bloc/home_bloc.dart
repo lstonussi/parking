@@ -21,6 +21,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Future<void> _onNewCar(NewCarEntry event, Emitter<HomeState> emit) async {
     emit(Loading());
+
     final resultOrFailure = await parkingLotsRepository.insert(
       ParkingLots(
         plate: event.plate,

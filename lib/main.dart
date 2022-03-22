@@ -10,6 +10,7 @@ import 'package:parking/repositories/parking_lots_repository.dart';
 import 'package:provider/provider.dart';
 
 import 'pages/config/presentation/bloc/config_event.dart';
+import 'pages/home/presentation/notifiers/parking_space_notifier.dart';
 
 void main() async {
   // final dbPath = await DatabaseUtil.instance.getDBPath();
@@ -40,6 +41,9 @@ void main() async {
                 _database,
               ),
             ),
+          ),
+          Provider<ParkingSpaceNotifier>(
+            create: (_) => ParkingSpaceNotifier(),
           ),
         ],
         child: const ParkingHomePage(),

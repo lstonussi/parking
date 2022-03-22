@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parking/pages/home/presentation/bloc/_bloc.dart';
-import 'package:parking/pages/home/presentation/widgets/parking_space.dart';
+import 'package:parking/pages/home/presentation/notifiers/parking_space_notifier.dart';
+import 'package:parking/pages/home/presentation/widgets/parking_space_grid_widget.dart';
+import 'package:parking/pages/home/presentation/widgets/parking_space_widget.dart';
 import 'package:parking/pages/home/utils/entry_bottom_sheet.dart';
-import 'package:parking/values/app_texts.dart';
 
 TypeView typeView = TypeView.detail;
 
@@ -27,7 +28,7 @@ class HomePage extends StatelessWidget {
           IconButton(
               icon: const Icon(Icons.add),
               onPressed: () {
-                showEntryBottomSheet(context);
+                showEntryBottomSheet(context: context);
               }),
           IconButton(
             icon: const Icon(Icons.view_comfortable),
@@ -39,16 +40,20 @@ class HomePage extends StatelessWidget {
       ),
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
-          print('{state: $state}');
           if (state is Loading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
+
           if (state is SavedNewCar) {
             _bloc.add(RefreshList());
           }
+
           if (state is LoadedParkingLots) {
+            context
+                .read<ParkingSpaceNotifier>()
+                .onListRecieve(state.parkingLots);
             final listWidget = List.generate(
               quantitySpace,
               (index) {
@@ -58,32 +63,15 @@ class HomePage extends StatelessWidget {
                 );
               },
             );
-            // if (state is ViewChanged) {
-            //   typeView = state.typeView;
-            // }
-            print(listWidget);
+
             return LayoutBuilder(
               builder: (_, contraints) => Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: (contraints.maxWidth * .1),
                 ),
-                child: Column(
-                  children: [
-                    Center(
-                      child: Text(
-                        '${AppTexts.parkingSpaceAvaible} ${(quantitySpace - state.parkingLots.length).toString()}',
-                      ),
-                    ),
-                    Expanded(
-                        child: GridView.count(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      crossAxisCount: 3,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
-                      children: listWidget,
-                    )),
-                  ],
+                child: ParkingSpaceGrid(
+                  listParkingSpace: listWidget,
+                  avaibleLots: quantitySpace - state.parkingLots.length,
                 ),
               ),
             );
