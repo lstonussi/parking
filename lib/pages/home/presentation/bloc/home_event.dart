@@ -8,7 +8,18 @@ abstract class HomeEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class NewCar extends HomeEvent {}
+class NewCarEntry extends HomeEvent {
+  const NewCarEntry({
+    required this.plate,
+    required this.modelCar,
+    required this.spaceParkingCode,
+    required this.entryHour,
+  });
+  final String plate;
+  final String modelCar;
+  final int spaceParkingCode;
+  final DateTime entryHour;
+}
 
 class ChangeView extends HomeEvent {
   const ChangeView({

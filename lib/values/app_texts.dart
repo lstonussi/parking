@@ -7,6 +7,8 @@ class AppTexts {
       'Quantidade de vagas disponíveis ';
   static const plate = 'Placa';
   static const modelCar = 'Modelo do carro';
+  static const spaceParkingCode = 'Número da Vaga';
   static const entryHour = 'Horario de entrada';
   static const departureHour = 'Horario de saída';
+  static const selectDateTime = 'Selecione a Data e Hora';
 }

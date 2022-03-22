@@ -161,7 +161,9 @@ class $ParkingConfigTable extends ParkingConfig
   @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
       'id', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: false);
+      type: const IntType(),
+      requiredDuringInsert: false,
+      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
   late final GeneratedColumn<String?> name = GeneratedColumn<String?>(
@@ -221,17 +223,17 @@ class $ParkingConfigTable extends ParkingConfig
 class ParkingLot extends DataClass implements Insertable<ParkingLot> {
   final int id;
   final String plate;
-  final String spaceParkingCode;
+  final int spaceParkingCode;
   final String modelCar;
   final DateTime entryDateTime;
-  final DateTime departureDateTime;
+  final DateTime? departureDateTime;
   ParkingLot(
       {required this.id,
       required this.plate,
       required this.spaceParkingCode,
       required this.modelCar,
       required this.entryDateTime,
-      required this.departureDateTime});
+      this.departureDateTime});
   factory ParkingLot.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return ParkingLot(
@@ -239,14 +241,14 @@ class ParkingLot extends DataClass implements Insertable<ParkingLot> {
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
       plate: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}plate'])!,
-      spaceParkingCode: const StringType().mapFromDatabaseResponse(
+      spaceParkingCode: const IntType().mapFromDatabaseResponse(
           data['${effectivePrefix}space_parking_code'])!,
       modelCar: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}model_car'])!,
       entryDateTime: const DateTimeType()
           .mapFromDatabaseResponse(data['${effectivePrefix}entry_date_time'])!,
       departureDateTime: const DateTimeType().mapFromDatabaseResponse(
-          data['${effectivePrefix}departure_date_time'])!,
+          data['${effectivePrefix}departure_date_time']),
     );
   }
   @override
@@ -254,10 +256,12 @@ class ParkingLot extends DataClass implements Insertable<ParkingLot> {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['plate'] = Variable<String>(plate);
-    map['space_parking_code'] = Variable<String>(spaceParkingCode);
+    map['space_parking_code'] = Variable<int>(spaceParkingCode);
     map['model_car'] = Variable<String>(modelCar);
     map['entry_date_time'] = Variable<DateTime>(entryDateTime);
-    map['departure_date_time'] = Variable<DateTime>(departureDateTime);
+    if (!nullToAbsent || departureDateTime != null) {
+      map['departure_date_time'] = Variable<DateTime?>(departureDateTime);
+    }
     return map;
   }
 
@@ -268,7 +272,9 @@ class ParkingLot extends DataClass implements Insertable<ParkingLot> {
       spaceParkingCode: Value(spaceParkingCode),
       modelCar: Value(modelCar),
       entryDateTime: Value(entryDateTime),
-      departureDateTime: Value(departureDateTime),
+      departureDateTime: departureDateTime == null && nullToAbsent
+          ? const Value.absent()
+          : Value(departureDateTime),
     );
   }
 
@@ -278,11 +284,11 @@ class ParkingLot extends DataClass implements Insertable<ParkingLot> {
     return ParkingLot(
       id: serializer.fromJson<int>(json['id']),
       plate: serializer.fromJson<String>(json['plate']),
-      spaceParkingCode: serializer.fromJson<String>(json['spaceParkingCode']),
+      spaceParkingCode: serializer.fromJson<int>(json['spaceParkingCode']),
       modelCar: serializer.fromJson<String>(json['modelCar']),
       entryDateTime: serializer.fromJson<DateTime>(json['entryDateTime']),
       departureDateTime:
-          serializer.fromJson<DateTime>(json['departureDateTime']),
+          serializer.fromJson<DateTime?>(json['departureDateTime']),
     );
   }
   @override
@@ -291,17 +297,17 @@ class ParkingLot extends DataClass implements Insertable<ParkingLot> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'plate': serializer.toJson<String>(plate),
-      'spaceParkingCode': serializer.toJson<String>(spaceParkingCode),
+      'spaceParkingCode': serializer.toJson<int>(spaceParkingCode),
       'modelCar': serializer.toJson<String>(modelCar),
       'entryDateTime': serializer.toJson<DateTime>(entryDateTime),
-      'departureDateTime': serializer.toJson<DateTime>(departureDateTime),
+      'departureDateTime': serializer.toJson<DateTime?>(departureDateTime),
     };
   }
 
   ParkingLot copyWith(
           {int? id,
           String? plate,
-          String? spaceParkingCode,
+          int? spaceParkingCode,
           String? modelCar,
           DateTime? entryDateTime,
           DateTime? departureDateTime}) =>
@@ -344,10 +350,10 @@ class ParkingLot extends DataClass implements Insertable<ParkingLot> {
 class ParkingLotsCompanion extends UpdateCompanion<ParkingLot> {
   final Value<int> id;
   final Value<String> plate;
-  final Value<String> spaceParkingCode;
+  final Value<int> spaceParkingCode;
   final Value<String> modelCar;
   final Value<DateTime> entryDateTime;
-  final Value<DateTime> departureDateTime;
+  final Value<DateTime?> departureDateTime;
   const ParkingLotsCompanion({
     this.id = const Value.absent(),
     this.plate = const Value.absent(),
@@ -359,22 +365,21 @@ class ParkingLotsCompanion extends UpdateCompanion<ParkingLot> {
   ParkingLotsCompanion.insert({
     this.id = const Value.absent(),
     required String plate,
-    required String spaceParkingCode,
+    required int spaceParkingCode,
     required String modelCar,
     required DateTime entryDateTime,
-    required DateTime departureDateTime,
+    this.departureDateTime = const Value.absent(),
   })  : plate = Value(plate),
         spaceParkingCode = Value(spaceParkingCode),
         modelCar = Value(modelCar),
-        entryDateTime = Value(entryDateTime),
-        departureDateTime = Value(departureDateTime);
+        entryDateTime = Value(entryDateTime);
   static Insertable<ParkingLot> custom({
     Expression<int>? id,
     Expression<String>? plate,
-    Expression<String>? spaceParkingCode,
+    Expression<int>? spaceParkingCode,
     Expression<String>? modelCar,
     Expression<DateTime>? entryDateTime,
-    Expression<DateTime>? departureDateTime,
+    Expression<DateTime?>? departureDateTime,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -389,10 +394,10 @@ class ParkingLotsCompanion extends UpdateCompanion<ParkingLot> {
   ParkingLotsCompanion copyWith(
       {Value<int>? id,
       Value<String>? plate,
-      Value<String>? spaceParkingCode,
+      Value<int>? spaceParkingCode,
       Value<String>? modelCar,
       Value<DateTime>? entryDateTime,
-      Value<DateTime>? departureDateTime}) {
+      Value<DateTime?>? departureDateTime}) {
     return ParkingLotsCompanion(
       id: id ?? this.id,
       plate: plate ?? this.plate,
@@ -413,7 +418,7 @@ class ParkingLotsCompanion extends UpdateCompanion<ParkingLot> {
       map['plate'] = Variable<String>(plate.value);
     }
     if (spaceParkingCode.present) {
-      map['space_parking_code'] = Variable<String>(spaceParkingCode.value);
+      map['space_parking_code'] = Variable<int>(spaceParkingCode.value);
     }
     if (modelCar.present) {
       map['model_car'] = Variable<String>(modelCar.value);
@@ -422,7 +427,7 @@ class ParkingLotsCompanion extends UpdateCompanion<ParkingLot> {
       map['entry_date_time'] = Variable<DateTime>(entryDateTime.value);
     }
     if (departureDateTime.present) {
-      map['departure_date_time'] = Variable<DateTime>(departureDateTime.value);
+      map['departure_date_time'] = Variable<DateTime?>(departureDateTime.value);
     }
     return map;
   }
@@ -451,7 +456,9 @@ class $ParkingLotsTable extends ParkingLots
   @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
       'id', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: false);
+      type: const IntType(),
+      requiredDuringInsert: false,
+      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _plateMeta = const VerificationMeta('plate');
   @override
   late final GeneratedColumn<String?> plate = GeneratedColumn<String?>(
@@ -460,9 +467,9 @@ class $ParkingLotsTable extends ParkingLots
   final VerificationMeta _spaceParkingCodeMeta =
       const VerificationMeta('spaceParkingCode');
   @override
-  late final GeneratedColumn<String?> spaceParkingCode =
-      GeneratedColumn<String?>('space_parking_code', aliasedName, false,
-          type: const StringType(), requiredDuringInsert: true);
+  late final GeneratedColumn<int?> spaceParkingCode = GeneratedColumn<int?>(
+      'space_parking_code', aliasedName, false,
+      type: const IntType(), requiredDuringInsert: true);
   final VerificationMeta _modelCarMeta = const VerificationMeta('modelCar');
   @override
   late final GeneratedColumn<String?> modelCar = GeneratedColumn<String?>(
@@ -478,8 +485,8 @@ class $ParkingLotsTable extends ParkingLots
       const VerificationMeta('departureDateTime');
   @override
   late final GeneratedColumn<DateTime?> departureDateTime =
-      GeneratedColumn<DateTime?>('departure_date_time', aliasedName, false,
-          type: const IntType(), requiredDuringInsert: true);
+      GeneratedColumn<DateTime?>('departure_date_time', aliasedName, true,
+          type: const IntType(), requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns =>
       [id, plate, spaceParkingCode, modelCar, entryDateTime, departureDateTime];
@@ -528,8 +535,6 @@ class $ParkingLotsTable extends ParkingLots
           _departureDateTimeMeta,
           departureDateTime.isAcceptableOrUnknown(
               data['departure_date_time']!, _departureDateTimeMeta));
-    } else if (isInserting) {
-      context.missing(_departureDateTimeMeta);
     }
     return context;
   }

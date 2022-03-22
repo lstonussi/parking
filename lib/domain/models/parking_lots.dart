@@ -5,12 +5,12 @@ part 'parking_lots.g.dart';
 @JsonSerializable()
 class ParkingLots extends Equatable {
   const ParkingLots({
-    required this.id,
+    this.id,
     required this.plate,
     required this.spaceParkingCode,
     required this.modelCar,
     required this.entryDateTime,
-    required this.departureDateTime,
+    this.departureDateTime,
   });
 
   factory ParkingLots.fromJson(Map<String, dynamic> json) =>
@@ -18,12 +18,12 @@ class ParkingLots extends Equatable {
 
   Map<String, dynamic> toJson() => _$ParkingLotsToJson(this);
 
-  final int id;
+  final int? id;
   final String plate;
-  final String spaceParkingCode;
+  final int spaceParkingCode;
   final String modelCar;
   final DateTime entryDateTime;
-  final DateTime departureDateTime;
+  final DateTime? departureDateTime;
 
   @override
   List<Object?> get props =>

@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:parking/data/db/drift/drift_database.dart';
 import 'package:parking/domain/models/parking_lots.dart';
 import 'package:parking/pages/home/presentation/bloc/_bloc.dart';
 
@@ -21,11 +20,13 @@ class ViewChanged extends HomeState {
   final TypeView typeView;
 }
 
-class Loaded extends HomeState {
-  const Loaded({
+class LoadedParkingLots extends HomeState {
+  const LoadedParkingLots({
     required this.parkingLots,
   });
   final List<ParkingLots> parkingLots;
 }
+
+class SavedNewCar extends HomeState {}
 
 class Error extends HomeState {}

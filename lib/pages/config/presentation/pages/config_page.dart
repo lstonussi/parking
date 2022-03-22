@@ -35,7 +35,7 @@ class ConfigPage extends StatelessWidget {
                         label: Text(AppTexts.parkingName),
                       ),
                       validator: (value) {
-                        return validateFormName(value);
+                        return validateFormEmptyText(value);
                       },
                     ),
                     TextFormField(

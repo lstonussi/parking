@@ -20,8 +20,8 @@ class ParkingLotsDaoImpl extends DatabaseAccessor<Database>
             ..orderBy(
               [
                 (t) => OrderingTerm(
-                      expression: t.entryDateTime,
-                      mode: OrderingMode.desc,
+                      expression: t.id,
+                      mode: OrderingMode.asc,
                     ),
               ],
             ))
@@ -54,12 +54,11 @@ class ParkingLotsDaoImpl extends DatabaseAccessor<Database>
     try {
       return await into(parkingLots).insertOnConflictUpdate(
         ParkingLotsCompanion.insert(
-          id: Value(parkingLot.id),
           plate: parkingLot.plate,
           modelCar: parkingLot.modelCar,
           spaceParkingCode: parkingLot.spaceParkingCode,
           entryDateTime: parkingLot.entryDateTime,
-          departureDateTime: parkingLot.departureDateTime,
+          departureDateTime: Value(parkingLot.departureDateTime),
         ),
       );
     } on SqliteException {

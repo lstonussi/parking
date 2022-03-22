@@ -1,6 +1,6 @@
-String? validateFormName(String? value) {
+String? validateFormEmptyText(String? value) {
   if (value != null && value.isEmpty) {
-    return 'Informe o nome completo';
+    return 'O campo não pode ser vazio';
   }
   return null;
 }
