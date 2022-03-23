@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:parking/domain/models/parking_space_model.dart';
+import 'package:parking/pages/home/presentation/bloc/home_bloc.dart';
 import 'package:parking/pages/home/presentation/notifiers/parking_space_notifier.dart';
 import 'package:parking/pages/home/utils/departure_bottom_sheet.dart';
 import 'package:parking/pages/home/utils/entry_bottom_sheet.dart';
@@ -14,13 +15,15 @@ class ParkingSpace extends StatelessWidget {
     Key? key,
     required this.index,
     required this.parkingSpace,
+    required this.typeView,
   }) : super(key: key);
 
   final int index;
   final List<ParkingSpaceModel> parkingSpace;
-
+  final TypeView typeView;
   @override
   Widget build(BuildContext context) {
+    final isCompact = typeView == TypeView.compact;
     final finalIndex =
         context.read<ParkingSpaceNotifier>().verifyParkingSpace(index: index);
     final hasCar = (finalIndex != -1);
@@ -49,36 +52,56 @@ class ParkingSpace extends StatelessWidget {
                   children: [
                     Text(
                       '${index + 1}',
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: isCompact
+                          ? Theme.of(context).textTheme.bodyText1
+                          : Theme.of(context).textTheme.headline6,
                     ),
-                    const SizedBox(height: 2),
+                    isCompact
+                        ? const SizedBox(height: 2)
+                        : const SizedBox(height: 4),
                     Text(
                       parkingSpace[finalIndex - 1].plate,
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: isCompact
+                          ? Theme.of(context).textTheme.bodyText1
+                          : Theme.of(context).textTheme.headline6,
                     ),
-                    const SizedBox(height: 1),
+                    isCompact
+                        ? const SizedBox(height: 1)
+                        : const SizedBox(height: 2),
                     Text(
                       parkingSpace[finalIndex - 1].modelCar,
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: isCompact
+                          ? Theme.of(context).textTheme.bodyText1
+                          : Theme.of(context).textTheme.headline6,
                     ),
-                    const SizedBox(height: 2),
+                    isCompact
+                        ? const SizedBox(height: 2)
+                        : const SizedBox(height: 4),
                     Text(
                       dateFormatDate
                           .format(parkingSpace[finalIndex - 1].entryDateTime),
-                      style: Theme.of(context).textTheme.bodyText2,
+                      style: isCompact
+                          ? Theme.of(context).textTheme.bodyText2
+                          : Theme.of(context).textTheme.headline6,
                     ),
-                    const SizedBox(height: 1),
+                    isCompact
+                        ? const SizedBox(height: 1)
+                        : const SizedBox(height: 2),
                     Text(
                       dateFormatTime
                           .format(parkingSpace[finalIndex - 1].entryDateTime),
-                      style: Theme.of(context).textTheme.bodyText2,
+                      style: isCompact
+                          ? Theme.of(context).textTheme.bodyText2
+                          : Theme.of(context).textTheme.headline6,
                     ),
                     Text(
                       parkingSpace[finalIndex - 1].departureDateTime != null
                           ? dateFormatTime.format(
                               parkingSpace[finalIndex - 1].departureDateTime!)
                           : '',
-                      style: Theme.of(context).textTheme.bodyText2,
+                      style: isCompact
+                          ? Theme.of(context).textTheme.bodyText2
+                          : Theme.of(context).textTheme.headline6,
                     ),
                   ],
                 ),
@@ -86,7 +109,9 @@ class ParkingSpace extends StatelessWidget {
             : Center(
                 child: Text(
                   '${index + 1}',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: isCompact
+                      ? Theme.of(context).textTheme.bodyText1
+                      : Theme.of(context).textTheme.headline6,
                 ),
               ),
       ),

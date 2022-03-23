@@ -23,8 +23,10 @@ class ViewChanged extends HomeState {
 class LoadedParkingSpace extends HomeState {
   const LoadedParkingSpace({
     required this.parkingSpace,
+    this.typeView,
   });
   final List<ParkingSpaceModel> parkingSpace;
+  final TypeView? typeView;
 }
 
 class SavedNewCar extends HomeState {}

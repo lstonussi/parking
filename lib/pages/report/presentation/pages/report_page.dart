@@ -58,7 +58,7 @@ class ReportPage extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.all(5.0),
-          child: Text('ID', textAlign: TextAlign.center),
+          child: Text(AppTexts.id, textAlign: TextAlign.center),
         ),
         Padding(
           padding: EdgeInsets.all(5.0),
@@ -84,6 +84,7 @@ class ReportPage extends StatelessWidget {
     );
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: const Text(AppTexts.report),
       ),
       body: SingleChildScrollView(

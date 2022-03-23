@@ -7,8 +7,6 @@ import 'package:parking/pages/home/presentation/widgets/parking_space_widget.dar
 import 'package:parking/pages/home/utils/entry_bottom_sheet.dart';
 import 'package:parking/pages/report/presentation/pages/report_page.dart';
 
-TypeView typeView = TypeView.detail;
-
 class HomePage extends StatelessWidget {
   const HomePage({
     Key? key,
@@ -23,8 +21,11 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final _bloc = context.read<HomeBloc>();
     final notifier = context.read<ParkingSpaceNotifier>();
+    TypeView typeView = TypeView.compact;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
         title: Text(name),
         actions: [
           IconButton(
@@ -33,7 +34,7 @@ class HomePage extends StatelessWidget {
                 showEntryBottomSheet(context: context);
               }),
           IconButton(
-            icon: const Icon(Icons.view_comfortable),
+            icon: const Icon(Icons.text_increase),
             onPressed: () {
               _bloc.add(ChangeView(typeView: typeView));
             },
@@ -62,11 +63,19 @@ class HomePage extends StatelessWidget {
             );
           }
 
+          if (state is ViewChanged) {
+            typeView = state.typeView;
+            _bloc.add(RefreshList(typeView: state.typeView));
+          }
+
           if (state is SavedNewCar || state is UpdatedDate) {
-            _bloc.add(RefreshList());
+            _bloc.add(const RefreshList());
           }
 
           if (state is LoadedParkingSpace) {
+            if (state.typeView != null) {
+              typeView = state.typeView!;
+            }
             context
                 .read<ParkingSpaceNotifier>()
                 .onListRecieve(state.parkingSpace);
@@ -74,6 +83,7 @@ class HomePage extends StatelessWidget {
               quantitySpace,
               (index) {
                 return ParkingSpace(
+                  typeView: typeView,
                   index: index,
                   parkingSpace: state.parkingSpace,
                 );
@@ -86,6 +96,7 @@ class HomePage extends StatelessWidget {
                   horizontal: (contraints.maxWidth * .1),
                 ),
                 child: ParkingSpaceGrid(
+                  typeView: typeView,
                   listParkingSpace: listWidget,
                   avaibleLots: quantitySpace -
                       state.parkingSpace

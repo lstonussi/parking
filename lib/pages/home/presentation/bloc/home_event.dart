@@ -37,4 +37,7 @@ class ChangeView extends HomeEvent {
   final TypeView typeView;
 }
 
-class RefreshList extends HomeEvent {}
+class RefreshList extends HomeEvent {
+  const RefreshList({this.typeView});
+  final TypeView? typeView;
+}

@@ -41,12 +41,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _onChangeView(ChangeView event, Emitter<HomeState> emit) async {
-    final type = TypeView.values.indexOf(event.typeView);
-    if (type == 0) {
-      emit(const ViewChanged(typeView: TypeView.detail));
-    } else {
-      emit(const ViewChanged(typeView: TypeView.compact));
-    }
+    emit(
+      event.typeView == TypeView.detail
+          ? const ViewChanged(typeView: TypeView.compact)
+          : const ViewChanged(typeView: TypeView.detail),
+    );
   }
 
   Future<void> _onDepartureCar(
@@ -79,6 +78,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         (error) => Error(),
         (list) => LoadedParkingSpace(
           parkingSpace: list,
+          typeView: event.typeView,
         ),
       ),
     );
