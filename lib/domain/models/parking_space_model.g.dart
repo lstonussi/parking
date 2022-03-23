@@ -1,12 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'parking_lots.dart';
+part of 'parking_space_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ParkingLots _$ParkingLotsFromJson(Map<String, dynamic> json) => ParkingLots(
+ParkingSpaceModel _$ParkingSpaceModelFromJson(Map<String, dynamic> json) =>
+    ParkingSpaceModel(
       id: json['id'] as int?,
       plate: json['plate'] as String,
       spaceParkingCode: json['spaceParkingCode'] as int,
@@ -17,7 +18,7 @@ ParkingLots _$ParkingLotsFromJson(Map<String, dynamic> json) => ParkingLots(
           : DateTime.parse(json['departureDateTime'] as String),
     );
 
-Map<String, dynamic> _$ParkingLotsToJson(ParkingLots instance) =>
+Map<String, dynamic> _$ParkingSpaceModelToJson(ParkingSpaceModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'plate': instance.plate,

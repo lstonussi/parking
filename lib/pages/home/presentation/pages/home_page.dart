@@ -21,6 +21,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _bloc = context.read<HomeBloc>();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(name),
@@ -46,20 +47,20 @@ class HomePage extends StatelessWidget {
             );
           }
 
-          if (state is SavedNewCar) {
+          if (state is SavedNewCar || state is UpdatedDate) {
             _bloc.add(RefreshList());
           }
 
-          if (state is LoadedParkingLots) {
+          if (state is LoadedParkingSpace) {
             context
                 .read<ParkingSpaceNotifier>()
-                .onListRecieve(state.parkingLots);
+                .onListRecieve(state.parkingSpace);
             final listWidget = List.generate(
               quantitySpace,
               (index) {
                 return ParkingSpace(
                   index: index,
-                  parkingLots: state.parkingLots,
+                  parkingSpace: state.parkingSpace,
                 );
               },
             );
@@ -71,7 +72,7 @@ class HomePage extends StatelessWidget {
                 ),
                 child: ParkingSpaceGrid(
                   listParkingSpace: listWidget,
-                  avaibleLots: quantitySpace - state.parkingLots.length,
+                  avaibleLots: quantitySpace - state.parkingSpace.length,
                 ),
               ),
             );

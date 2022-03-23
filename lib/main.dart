@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parking/data/db/drift/drift_database.dart';
 import 'package:parking/data/db/drift/parking_config_dao_impl.dart';
-import 'package:parking/data/db/drift/parking_lots_dao_impl.dart';
+import 'package:parking/data/db/drift/parking_space_dao_impl.dart';
 import 'package:parking/pages/config/presentation/bloc/config_bloc.dart';
 import 'package:parking/pages/parking_home_page.dart';
 import 'package:parking/repositories/parking_config_repository.dart';
-import 'package:parking/repositories/parking_lots_repository.dart';
+import 'package:parking/repositories/parking_space_repository.dart';
 import 'package:provider/provider.dart';
 
 import 'pages/config/presentation/bloc/config_event.dart';
@@ -35,14 +35,14 @@ void main() async {
               parkingConfigDAO: parkingConfigDAO,
             ),
           ),
-          RepositoryProvider<ParkingLotsRepository>(
-            create: (context) => ParkingLotsRepository(
-              parkingLotsDAO: ParkingLotsDaoImpl(
+          RepositoryProvider<ParkingSpaceRepository>(
+            create: (context) => ParkingSpaceRepository(
+              parkingSpaceDAO: ParkingSpaceDaoImpl(
                 _database,
               ),
             ),
           ),
-          Provider<ParkingSpaceNotifier>(
+          ChangeNotifierProvider<ParkingSpaceNotifier>(
             create: (_) => ParkingSpaceNotifier(),
           ),
         ],

@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-part 'parking_lots.g.dart';
+part 'parking_space_model.g.dart';
 
 @JsonSerializable()
-class ParkingLots extends Equatable {
-  const ParkingLots({
+class ParkingSpaceModel extends Equatable {
+  const ParkingSpaceModel({
     this.id,
     required this.plate,
     required this.spaceParkingCode,
@@ -13,10 +13,10 @@ class ParkingLots extends Equatable {
     this.departureDateTime,
   });
 
-  factory ParkingLots.fromJson(Map<String, dynamic> json) =>
-      _$ParkingLotsFromJson(json);
+  factory ParkingSpaceModel.fromJson(Map<String, dynamic> json) =>
+      _$ParkingSpaceModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ParkingLotsToJson(this);
+  Map<String, dynamic> toJson() => _$ParkingSpaceModelToJson(this);
 
   final int? id;
   final String plate;

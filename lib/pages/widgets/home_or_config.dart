@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parking/data/db/drift/drift_database.dart';
-import 'package:parking/data/db/drift/parking_lots_dao_impl.dart';
+import 'package:parking/data/db/drift/parking_space_dao_impl.dart';
 import 'package:parking/pages/config/presentation/bloc/config_bloc.dart';
 import 'package:parking/pages/config/presentation/bloc/config_state.dart';
 import 'package:parking/pages/config/presentation/pages/config_page.dart';
 import 'package:parking/pages/home/presentation/bloc/_bloc.dart' as homebloc;
 import 'package:parking/pages/home/presentation/pages/home_page.dart';
-import 'package:parking/repositories/parking_lots_repository.dart';
+import 'package:parking/repositories/parking_space_repository.dart';
 
 class HomeOrConfig extends StatelessWidget {
   const HomeOrConfig({Key? key}) : super(key: key);
@@ -25,8 +25,8 @@ class HomeOrConfig extends StatelessWidget {
         } else if (state is AlreadyConfigured) {
           return BlocProvider<homebloc.HomeBloc>(
             create: (context) => homebloc.HomeBloc(
-              parkingLotsRepository: ParkingLotsRepository(
-                parkingLotsDAO: ParkingLotsDaoImpl(Database.instance),
+              parkingSpaceRepository: ParkingSpaceRepository(
+                parkingSpaceDAO: ParkingSpaceDaoImpl(Database.instance),
               ),
             )..add(homebloc.RefreshList()),
             child: HomePage(

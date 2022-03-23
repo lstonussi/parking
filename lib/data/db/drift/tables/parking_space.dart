@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 
-class ParkingLots extends Table {
+class ParkingSpace extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get plate => text()();
   IntColumn get spaceParkingCode => integer()();

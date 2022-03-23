@@ -4,7 +4,7 @@ import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:flutter/foundation.dart';
 import 'package:parking/data/db/drift/tables/parking_config.dart';
-import 'package:parking/data/db/drift/tables/parking_lots.dart';
+import 'package:parking/data/db/drift/tables/parking_space.dart';
 import 'package:parking/utils/database_util.dart';
 import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
 part 'drift_database.g.dart';
@@ -12,7 +12,7 @@ part 'drift_database.g.dart';
 @DriftDatabase(
   tables: [
     ParkingConfig,
-    ParkingLots,
+    ParkingSpace,
   ],
 )
 class Database extends _$Database {

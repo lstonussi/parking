@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:parking/pages/home/presentation/bloc/_bloc.dart';
 import 'package:parking/pages/home/presentation/notifiers/parking_space_notifier.dart';
-import 'package:parking/pages/home/utils/verify_parking_space.dart';
 import 'package:parking/utils/validators.dart';
 import 'package:parking/values/app_texts.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +24,7 @@ void showEntryBottomSheet({
       _spaceParkingCodeController = TextEditingController(),
       _departureController = TextEditingController();
   DateFormat dateFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
+  final parkingNotifier = context.read<ParkingSpaceNotifier>();
   _entryHourController.text = dateFormat.format(DateTime.now());
   if (parkingSpace != null) {
     _spaceParkingCodeController.text = parkingSpace.toString();
@@ -121,10 +121,8 @@ void showEntryBottomSheet({
                       ),
                       onPressed: () async {
                         if (_formKey.currentState?.validate() ?? false) {
-                          final list =
-                              context.read<ParkingSpaceNotifier>().list;
-                          if (verifyParkingSpace(
-                                  parkingLots: list,
+                          final list = parkingNotifier.list;
+                          if (parkingNotifier.verifyParkingSpace(
                                   index: int.parse(
                                           _spaceParkingCodeController.text) -
                                       1) >

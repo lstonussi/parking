@@ -4,6 +4,8 @@ class InsertException implements Exception {}
 
 class DeleteException implements Exception {}
 
+class UpdateException implements Exception {}
+
 class NotFoundException implements Exception {}
 
 class ErrorException implements Exception {}

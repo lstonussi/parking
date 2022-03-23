@@ -1,22 +1,22 @@
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:parking/commons/error/exception.dart';
-import 'package:parking/data/db/dao/parking_lots_dao.dart';
+import 'package:parking/data/db/dao/parking_space_dao.dart';
 import 'package:parking/data/db/drift/drift_database.dart';
-import 'package:parking/data/db/drift/tables/parking_lots.dart' as table;
-import 'package:parking/domain/models/parking_lots.dart';
-part 'parking_lots_dao_impl.g.dart';
+import 'package:parking/data/db/drift/tables/parking_space.dart' as table;
+import 'package:parking/domain/models/parking_space_model.dart';
+part 'parking_space_dao_impl.g.dart';
 
-@DriftAccessor(tables: [table.ParkingLots])
-class ParkingLotsDaoImpl extends DatabaseAccessor<Database>
-    with _$ParkingLotsDaoImplMixin
-    implements ParkingLotsDAO {
-  ParkingLotsDaoImpl(Database attachedDatabase) : super(attachedDatabase);
+@DriftAccessor(tables: [table.ParkingSpace])
+class ParkingSpaceDaoImpl extends DatabaseAccessor<Database>
+    with _$ParkingSpaceDaoImplMixin
+    implements ParkingSpaceDAO {
+  ParkingSpaceDaoImpl(Database attachedDatabase) : super(attachedDatabase);
 
   @override
-  Future<List<ParkingLots>> getAll() async {
+  Future<List<ParkingSpaceModel>> getAll() async {
     try {
-      final nList = await (select(parkingLots)
+      final nList = await (select(parkingSpace)
             ..orderBy(
               [
                 (t) => OrderingTerm(
@@ -27,11 +27,11 @@ class ParkingLotsDaoImpl extends DatabaseAccessor<Database>
             ))
           .get();
 
-      final itemList = <ParkingLots>[];
+      final itemList = <ParkingSpaceModel>[];
 
       for (final n in nList) {
         itemList.add(
-          ParkingLots(
+          ParkingSpaceModel(
             id: n.id,
             plate: n.plate,
             modelCar: n.modelCar,
@@ -50,10 +50,10 @@ class ParkingLotsDaoImpl extends DatabaseAccessor<Database>
   }
 
   @override
-  Future<int> insert(ParkingLots parkingLot) async {
+  Future<int> insert(ParkingSpaceModel parkingLot) async {
     try {
-      return await into(parkingLots).insertOnConflictUpdate(
-        ParkingLotsCompanion.insert(
+      return await into(parkingSpace).insertOnConflictUpdate(
+        ParkingSpaceCompanion.insert(
           plate: parkingLot.plate,
           modelCar: parkingLot.modelCar,
           spaceParkingCode: parkingLot.spaceParkingCode,
@@ -71,9 +71,30 @@ class ParkingLotsDaoImpl extends DatabaseAccessor<Database>
   @override
   Future<int> deleteAll() async {
     try {
-      return await delete(parkingLots).go();
+      return await delete(parkingSpace).go();
     } on SqliteException {
       throw DeleteException();
+    } catch (e) {
+      throw GenericException(message: e.toString());
+    }
+  }
+
+  @override
+  Future<int> updateDate(ParkingSpaceModel parkingSpaceModel) async {
+    try {
+      return await customUpdate(
+        'UPDATE parking_space SET departure_date_time = ? WHERE id = ?',
+        updates: {
+          parkingSpace,
+        },
+        variables: [
+          Variable(parkingSpaceModel.departureDateTime),
+          Variable(parkingSpaceModel.id),
+        ],
+        updateKind: UpdateKind.update,
+      );
+    } on SqliteException {
+      throw UpdateException();
     } catch (e) {
       throw GenericException(message: e.toString());
     }

@@ -220,23 +220,25 @@ class $ParkingConfigTable extends ParkingConfig
   }
 }
 
-class ParkingLot extends DataClass implements Insertable<ParkingLot> {
+class ParkingSpaceData extends DataClass
+    implements Insertable<ParkingSpaceData> {
   final int id;
   final String plate;
   final int spaceParkingCode;
   final String modelCar;
   final DateTime entryDateTime;
   final DateTime? departureDateTime;
-  ParkingLot(
+  ParkingSpaceData(
       {required this.id,
       required this.plate,
       required this.spaceParkingCode,
       required this.modelCar,
       required this.entryDateTime,
       this.departureDateTime});
-  factory ParkingLot.fromData(Map<String, dynamic> data, {String? prefix}) {
+  factory ParkingSpaceData.fromData(Map<String, dynamic> data,
+      {String? prefix}) {
     final effectivePrefix = prefix ?? '';
-    return ParkingLot(
+    return ParkingSpaceData(
       id: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
       plate: const StringType()
@@ -265,8 +267,8 @@ class ParkingLot extends DataClass implements Insertable<ParkingLot> {
     return map;
   }
 
-  ParkingLotsCompanion toCompanion(bool nullToAbsent) {
-    return ParkingLotsCompanion(
+  ParkingSpaceCompanion toCompanion(bool nullToAbsent) {
+    return ParkingSpaceCompanion(
       id: Value(id),
       plate: Value(plate),
       spaceParkingCode: Value(spaceParkingCode),
@@ -278,10 +280,10 @@ class ParkingLot extends DataClass implements Insertable<ParkingLot> {
     );
   }
 
-  factory ParkingLot.fromJson(Map<String, dynamic> json,
+  factory ParkingSpaceData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ParkingLot(
+    return ParkingSpaceData(
       id: serializer.fromJson<int>(json['id']),
       plate: serializer.fromJson<String>(json['plate']),
       spaceParkingCode: serializer.fromJson<int>(json['spaceParkingCode']),
@@ -304,14 +306,14 @@ class ParkingLot extends DataClass implements Insertable<ParkingLot> {
     };
   }
 
-  ParkingLot copyWith(
+  ParkingSpaceData copyWith(
           {int? id,
           String? plate,
           int? spaceParkingCode,
           String? modelCar,
           DateTime? entryDateTime,
           DateTime? departureDateTime}) =>
-      ParkingLot(
+      ParkingSpaceData(
         id: id ?? this.id,
         plate: plate ?? this.plate,
         spaceParkingCode: spaceParkingCode ?? this.spaceParkingCode,
@@ -321,7 +323,7 @@ class ParkingLot extends DataClass implements Insertable<ParkingLot> {
       );
   @override
   String toString() {
-    return (StringBuffer('ParkingLot(')
+    return (StringBuffer('ParkingSpaceData(')
           ..write('id: $id, ')
           ..write('plate: $plate, ')
           ..write('spaceParkingCode: $spaceParkingCode, ')
@@ -338,7 +340,7 @@ class ParkingLot extends DataClass implements Insertable<ParkingLot> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is ParkingLot &&
+      (other is ParkingSpaceData &&
           other.id == this.id &&
           other.plate == this.plate &&
           other.spaceParkingCode == this.spaceParkingCode &&
@@ -347,14 +349,14 @@ class ParkingLot extends DataClass implements Insertable<ParkingLot> {
           other.departureDateTime == this.departureDateTime);
 }
 
-class ParkingLotsCompanion extends UpdateCompanion<ParkingLot> {
+class ParkingSpaceCompanion extends UpdateCompanion<ParkingSpaceData> {
   final Value<int> id;
   final Value<String> plate;
   final Value<int> spaceParkingCode;
   final Value<String> modelCar;
   final Value<DateTime> entryDateTime;
   final Value<DateTime?> departureDateTime;
-  const ParkingLotsCompanion({
+  const ParkingSpaceCompanion({
     this.id = const Value.absent(),
     this.plate = const Value.absent(),
     this.spaceParkingCode = const Value.absent(),
@@ -362,7 +364,7 @@ class ParkingLotsCompanion extends UpdateCompanion<ParkingLot> {
     this.entryDateTime = const Value.absent(),
     this.departureDateTime = const Value.absent(),
   });
-  ParkingLotsCompanion.insert({
+  ParkingSpaceCompanion.insert({
     this.id = const Value.absent(),
     required String plate,
     required int spaceParkingCode,
@@ -373,7 +375,7 @@ class ParkingLotsCompanion extends UpdateCompanion<ParkingLot> {
         spaceParkingCode = Value(spaceParkingCode),
         modelCar = Value(modelCar),
         entryDateTime = Value(entryDateTime);
-  static Insertable<ParkingLot> custom({
+  static Insertable<ParkingSpaceData> custom({
     Expression<int>? id,
     Expression<String>? plate,
     Expression<int>? spaceParkingCode,
@@ -391,14 +393,14 @@ class ParkingLotsCompanion extends UpdateCompanion<ParkingLot> {
     });
   }
 
-  ParkingLotsCompanion copyWith(
+  ParkingSpaceCompanion copyWith(
       {Value<int>? id,
       Value<String>? plate,
       Value<int>? spaceParkingCode,
       Value<String>? modelCar,
       Value<DateTime>? entryDateTime,
       Value<DateTime?>? departureDateTime}) {
-    return ParkingLotsCompanion(
+    return ParkingSpaceCompanion(
       id: id ?? this.id,
       plate: plate ?? this.plate,
       spaceParkingCode: spaceParkingCode ?? this.spaceParkingCode,
@@ -434,7 +436,7 @@ class ParkingLotsCompanion extends UpdateCompanion<ParkingLot> {
 
   @override
   String toString() {
-    return (StringBuffer('ParkingLotsCompanion(')
+    return (StringBuffer('ParkingSpaceCompanion(')
           ..write('id: $id, ')
           ..write('plate: $plate, ')
           ..write('spaceParkingCode: $spaceParkingCode, ')
@@ -446,12 +448,12 @@ class ParkingLotsCompanion extends UpdateCompanion<ParkingLot> {
   }
 }
 
-class $ParkingLotsTable extends ParkingLots
-    with TableInfo<$ParkingLotsTable, ParkingLot> {
+class $ParkingSpaceTable extends ParkingSpace
+    with TableInfo<$ParkingSpaceTable, ParkingSpaceData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $ParkingLotsTable(this.attachedDatabase, [this._alias]);
+  $ParkingSpaceTable(this.attachedDatabase, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
@@ -491,11 +493,11 @@ class $ParkingLotsTable extends ParkingLots
   List<GeneratedColumn> get $columns =>
       [id, plate, spaceParkingCode, modelCar, entryDateTime, departureDateTime];
   @override
-  String get aliasedName => _alias ?? 'parking_lots';
+  String get aliasedName => _alias ?? 'parking_space';
   @override
-  String get actualTableName => 'parking_lots';
+  String get actualTableName => 'parking_space';
   @override
-  VerificationContext validateIntegrity(Insertable<ParkingLot> instance,
+  VerificationContext validateIntegrity(Insertable<ParkingSpaceData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -542,24 +544,24 @@ class $ParkingLotsTable extends ParkingLots
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  ParkingLot map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return ParkingLot.fromData(data,
+  ParkingSpaceData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return ParkingSpaceData.fromData(data,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
-  $ParkingLotsTable createAlias(String alias) {
-    return $ParkingLotsTable(attachedDatabase, alias);
+  $ParkingSpaceTable createAlias(String alias) {
+    return $ParkingSpaceTable(attachedDatabase, alias);
   }
 }
 
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   late final $ParkingConfigTable parkingConfig = $ParkingConfigTable(this);
-  late final $ParkingLotsTable parkingLots = $ParkingLotsTable(this);
+  late final $ParkingSpaceTable parkingSpace = $ParkingSpaceTable(this);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [parkingConfig, parkingLots];
+      [parkingConfig, parkingSpace];
 }

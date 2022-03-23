@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:parking/domain/models/parking_lots.dart';
+import 'package:parking/domain/models/parking_space_model.dart';
 import 'package:parking/pages/home/presentation/bloc/_bloc.dart';
 
 abstract class HomeState extends Equatable {
@@ -20,13 +20,15 @@ class ViewChanged extends HomeState {
   final TypeView typeView;
 }
 
-class LoadedParkingLots extends HomeState {
-  const LoadedParkingLots({
-    required this.parkingLots,
+class LoadedParkingSpace extends HomeState {
+  const LoadedParkingSpace({
+    required this.parkingSpace,
   });
-  final List<ParkingLots> parkingLots;
+  final List<ParkingSpaceModel> parkingSpace;
 }
 
 class SavedNewCar extends HomeState {}
+
+class UpdatedDate extends HomeState {}
 
 class Error extends HomeState {}

@@ -21,6 +21,15 @@ class NewCarEntry extends HomeEvent {
   final DateTime entryHour;
 }
 
+class DepartureCar extends HomeEvent {
+  const DepartureCar({
+    required this.id,
+    required this.departureDateTime,
+  });
+  final int id;
+  final DateTime departureDateTime;
+}
+
 class ChangeView extends HomeEvent {
   const ChangeView({
     required this.typeView,

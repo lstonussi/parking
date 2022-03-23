@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:parking/domain/models/parking_lots.dart';
+import 'package:parking/domain/models/parking_space_model.dart';
 import 'package:parking/pages/home/presentation/bloc/_bloc.dart';
-import 'package:parking/repositories/parking_lots_repository.dart';
+import 'package:parking/repositories/parking_space_repository.dart';
 
 enum TypeView {
   compact,
@@ -10,20 +10,21 @@ enum TypeView {
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc({
-    required this.parkingLotsRepository,
+    required this.parkingSpaceRepository,
   }) : super(Idle()) {
     on<NewCarEntry>(_onNewCar);
+    on<DepartureCar>(_onDepartureCar);
     on<RefreshList>(_onRefreshList);
     on<ChangeView>(_onChangeView);
   }
 
-  final ParkingLotsRepository parkingLotsRepository;
+  final ParkingSpaceRepository parkingSpaceRepository;
 
   Future<void> _onNewCar(NewCarEntry event, Emitter<HomeState> emit) async {
     emit(Loading());
 
-    final resultOrFailure = await parkingLotsRepository.insert(
-      ParkingLots(
+    final resultOrFailure = await parkingSpaceRepository.insert(
+      ParkingSpaceModel(
         plate: event.plate,
         modelCar: event.modelCar,
         spaceParkingCode: event.spaceParkingCode,
@@ -48,15 +49,36 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
   }
 
-  Future<void> _onRefreshList(
-      RefreshList event, Emitter<HomeState> emit) async {
+  Future<void> _onDepartureCar(
+      DepartureCar event, Emitter<HomeState> emit) async {
     emit(Loading());
-    final resultOrFailure = await parkingLotsRepository.getAll();
+    final resultOrFailure = await parkingSpaceRepository.updateDate(
+      ParkingSpaceModel(
+        id: event.id,
+        plate: 'plate',
+        spaceParkingCode: 0,
+        modelCar: 'modelCar',
+        entryDateTime: DateTime.now(),
+        departureDateTime: event.departureDateTime,
+      ),
+    );
     emit(
       resultOrFailure.fold(
         (error) => Error(),
-        (list) => LoadedParkingLots(
-          parkingLots: list,
+        (list) => UpdatedDate(),
+      ),
+    );
+  }
+
+  Future<void> _onRefreshList(
+      RefreshList event, Emitter<HomeState> emit) async {
+    emit(Loading());
+    final resultOrFailure = await parkingSpaceRepository.getAll();
+    emit(
+      resultOrFailure.fold(
+        (error) => Error(),
+        (list) => LoadedParkingSpace(
+          parkingSpace: list,
         ),
       ),
     );

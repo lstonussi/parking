@@ -11,6 +11,8 @@ abstract class Failure extends Equatable {
 
 class SaveFailure extends Failure {}
 
+class UpdateDataBaseFailure extends Failure {}
+
 class InsertDataBaseFailure extends Failure {}
 
 class SelectDataBaseFailure extends Failure {}

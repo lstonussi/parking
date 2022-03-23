@@ -16,17 +16,22 @@ class ParkingSpaceGrid extends StatelessWidget {
     return Column(
       children: [
         Center(
-          child: Text(
-            '${AppTexts.parkingSpaceAvaible} ${(avaibleLots).toString()}',
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              '${AppTexts.parkingSpaceAvaible} ${(avaibleLots).toString()}',
+              style: Theme.of(context).textTheme.headline6,
+            ),
           ),
         ),
         Expanded(
           child: GridView.count(
+            childAspectRatio: .8,
             shrinkWrap: true,
             scrollDirection: Axis.vertical,
             crossAxisCount: 3,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
+            mainAxisSpacing: 8,
+            crossAxisSpacing: 8,
             children: listParkingSpace,
           ),
         ),
