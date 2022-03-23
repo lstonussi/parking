@@ -4,7 +4,7 @@ import 'package:parking/data/db/drift/drift_database.dart';
 import 'package:parking/data/db/drift/parking_config_dao_impl.dart';
 import 'package:parking/data/db/drift/parking_space_dao_impl.dart';
 import 'package:parking/pages/config/presentation/bloc/config_bloc.dart';
-import 'package:parking/pages/parking_home_page.dart';
+import 'package:parking/pages/widgets/home_or_config.dart';
 import 'package:parking/repositories/parking_config_repository.dart';
 import 'package:parking/repositories/parking_space_repository.dart';
 import 'package:provider/provider.dart';
@@ -46,7 +46,7 @@ void main() async {
             create: (_) => ParkingSpaceNotifier(),
           ),
         ],
-        child: const ParkingHomePage(),
+        child: const HomeOrConfig(),
       ),
     ),
   );

@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:parking/domain/models/parking_space_model.dart';
 import 'package:parking/pages/home/presentation/bloc/_bloc.dart';
-import 'package:parking/pages/home/presentation/notifiers/parking_space_notifier.dart';
 import 'package:parking/utils/validators.dart';
 import 'package:parking/values/app_texts.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +16,6 @@ void showDepartureBottomSheet({
   final FocusNode _departureHourFocus = FocusNode();
   final TextEditingController _departureController = TextEditingController();
   DateFormat dateFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
-  final parkingNotifier = context.read<ParkingSpaceNotifier>();
   _departureController.text = dateFormat.format(DateTime.now());
 
   final _bloc = context.read<HomeBloc>();

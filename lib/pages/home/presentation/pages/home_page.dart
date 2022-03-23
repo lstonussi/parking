@@ -5,6 +5,7 @@ import 'package:parking/pages/home/presentation/notifiers/parking_space_notifier
 import 'package:parking/pages/home/presentation/widgets/parking_space_grid_widget.dart';
 import 'package:parking/pages/home/presentation/widgets/parking_space_widget.dart';
 import 'package:parking/pages/home/utils/entry_bottom_sheet.dart';
+import 'package:parking/pages/report/presentation/pages/report_page.dart';
 
 TypeView typeView = TypeView.detail;
 
@@ -21,7 +22,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _bloc = context.read<HomeBloc>();
-
+    final notifier = context.read<ParkingSpaceNotifier>();
     return Scaffold(
       appBar: AppBar(
         title: Text(name),
@@ -35,6 +36,19 @@ class HomePage extends StatelessWidget {
             icon: const Icon(Icons.view_comfortable),
             onPressed: () {
               _bloc.add(ChangeView(typeView: typeView));
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.insert_chart_outlined_sharp),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ReportPage(
+                    parkingSpace: notifier.list,
+                  ),
+                ),
+              );
             },
           ),
         ],

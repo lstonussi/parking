@@ -16,13 +16,13 @@ void showEntryBottomSheet({
   final FocusNode _plateFocus = FocusNode(),
       _modelCarFocus = FocusNode(),
       _entryHourFocus = FocusNode(),
-      _spaceParkingCodeFocus = FocusNode(),
-      _departureHourFocus = FocusNode();
+      _spaceParkingCodeFocus = FocusNode();
+
   final TextEditingController _plateController = TextEditingController(),
       _modelCarController = TextEditingController(),
       _entryHourController = TextEditingController(),
-      _spaceParkingCodeController = TextEditingController(),
-      _departureController = TextEditingController();
+      _spaceParkingCodeController = TextEditingController();
+
   DateFormat dateFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
   final parkingNotifier = context.read<ParkingSpaceNotifier>();
   _entryHourController.text = dateFormat.format(DateTime.now());
@@ -121,7 +121,6 @@ void showEntryBottomSheet({
                       ),
                       onPressed: () async {
                         if (_formKey.currentState?.validate() ?? false) {
-                          final list = parkingNotifier.list;
                           if (parkingNotifier.verifyParkingSpace(
                                   index: int.parse(
                                           _spaceParkingCodeController.text) -

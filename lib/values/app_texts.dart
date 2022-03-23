@@ -11,4 +11,5 @@ class AppTexts {
   static const entryHour = 'Horario de entrada';
   static const departureHour = 'Horario de saída';
   static const selectDateTime = 'Selecione a Data e Hora';
+  static const report = 'Relatório';
 }
