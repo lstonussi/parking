@@ -40,6 +40,7 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: BlocBuilder<HomeBloc, HomeState>(
+        buildWhen: (previousState, state) => previousState != state,
         builder: (context, state) {
           if (state is Loading) {
             return const Center(
@@ -72,12 +73,15 @@ class HomePage extends StatelessWidget {
                 ),
                 child: ParkingSpaceGrid(
                   listParkingSpace: listWidget,
-                  avaibleLots: quantitySpace - state.parkingSpace.length,
+                  avaibleLots: quantitySpace -
+                      state.parkingSpace
+                          .where((element) => element.departureDateTime == null)
+                          .length,
                 ),
               ),
             );
           }
-          return Container(color: Colors.red);
+          return const CircularProgressIndicator();
         },
       ),
     );

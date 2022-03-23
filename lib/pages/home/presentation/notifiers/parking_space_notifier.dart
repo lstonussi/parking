@@ -19,11 +19,13 @@ class ParkingSpaceNotifier extends ChangeNotifier {
     int spaceParkingCode = -1;
     if ((_parkingSpace.any(
       (element) {
-        if ((element.spaceParkingCode == index + 1) &&
-            element.departureDateTime == null) {
+        final result = ((element.spaceParkingCode == index + 1) &&
+            (element.departureDateTime == null));
+
+        if (result) {
           spaceParkingCode = element.id!;
         }
-        return element.spaceParkingCode == index + 1;
+        return result;
       },
     ))) {
       return spaceParkingCode;

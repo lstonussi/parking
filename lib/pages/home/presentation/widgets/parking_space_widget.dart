@@ -21,11 +21,9 @@ class ParkingSpace extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hasCar = (parkingSpace.any((element) =>
-        (element.spaceParkingCode == index + 1) &&
-        element.departureDateTime == null));
     final finalIndex =
         context.read<ParkingSpaceNotifier>().verifyParkingSpace(index: index);
+    final hasCar = (finalIndex != -1);
     return GestureDetector(
       onTap: () {
         if (finalIndex >= 0) {
