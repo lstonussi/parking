@@ -7,7 +7,7 @@ import 'package:parking/pages/config/presentation/bloc/config_state.dart';
 import 'package:parking/pages/config/presentation/pages/config_page.dart';
 import 'package:parking/pages/home/presentation/bloc/_bloc.dart' as homebloc;
 import 'package:parking/pages/home/presentation/pages/home_page.dart';
-import 'package:parking/repositories/parking_space_repository.dart';
+import 'package:parking/pages/home/data/repositories/parking_space_repository_impl.dart';
 
 class HomeOrConfig extends StatelessWidget {
   const HomeOrConfig({Key? key}) : super(key: key);
@@ -27,7 +27,7 @@ class HomeOrConfig extends StatelessWidget {
           } else if (state is AlreadyConfigured) {
             return BlocProvider<homebloc.HomeBloc>(
               create: (context) => homebloc.HomeBloc(
-                parkingSpaceRepository: ParkingSpaceRepository(
+                parkingSpaceRepository: ParkingSpaceRepositoryImpl(
                   parkingSpaceDAO: ParkingSpaceDaoImpl(Database.instance),
                 ),
               )..add(const homebloc.RefreshList()),

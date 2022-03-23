@@ -3,14 +3,17 @@ import 'package:parking/commons/error/exception.dart';
 import 'package:parking/commons/error/failure.dart';
 import 'package:parking/data/db/dao/parking_space_dao.dart';
 import 'package:parking/domain/models/parking_space_model.dart';
+import 'package:parking/pages/home/domain/repositories/parking_space_repository.dart';
 
-class ParkingSpaceRepository {
-  ParkingSpaceRepository({
+class ParkingSpaceRepositoryImpl implements ParkingSpaceRepository {
+  ParkingSpaceRepositoryImpl({
     required this.parkingSpaceDAO,
   });
   final ParkingSpaceDAO parkingSpaceDAO;
 
-  Future<Either<Failure, int>> insert(ParkingSpaceModel parkingConfig) async {
+  @override
+  Future<Either<Failure, int>> insert(
+      {required ParkingSpaceModel parkingConfig}) async {
     try {
       final result = await parkingSpaceDAO.insert(parkingConfig);
       return Right(result);
@@ -21,8 +24,9 @@ class ParkingSpaceRepository {
     }
   }
 
+  @override
   Future<Either<Failure, int>> updateDate(
-      ParkingSpaceModel parkingSpaceModel) async {
+      {required ParkingSpaceModel parkingSpaceModel}) async {
     try {
       final result = await parkingSpaceDAO.updateDate(parkingSpaceModel);
       return Right(result);
@@ -33,6 +37,7 @@ class ParkingSpaceRepository {
     }
   }
 
+  @override
   Future<Either<Failure, List<ParkingSpaceModel>>> getAll() async {
     try {
       final result = await parkingSpaceDAO.getAll();
@@ -44,6 +49,7 @@ class ParkingSpaceRepository {
     }
   }
 
+  @override
   Future<Either<Failure, int>> deleteAll() async {
     try {
       final result = await parkingSpaceDAO.deleteAll();

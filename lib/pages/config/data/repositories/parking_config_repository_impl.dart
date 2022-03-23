@@ -4,8 +4,8 @@ import 'package:parking/commons/error/failure.dart';
 import 'package:parking/data/db/dao/parking_dao.dart';
 import 'package:parking/domain/models/parking_config.dart';
 
-class ParkingConfigRepository {
-  ParkingConfigRepository({
+class ParkingConfigRepositoryImpl {
+  ParkingConfigRepositoryImpl({
     required this.parkingConfigDAO,
   });
   final ParkingConfigDAO parkingConfigDAO;

@@ -5,8 +5,8 @@ import 'package:parking/data/db/drift/parking_config_dao_impl.dart';
 import 'package:parking/data/db/drift/parking_space_dao_impl.dart';
 import 'package:parking/pages/config/presentation/bloc/config_bloc.dart';
 import 'package:parking/pages/widgets/home_or_config.dart';
-import 'package:parking/repositories/parking_config_repository.dart';
-import 'package:parking/repositories/parking_space_repository.dart';
+import 'package:parking/pages/config/data/repositories/parking_config_repository_impl.dart';
+import 'package:parking/pages/home/data/repositories/parking_space_repository_impl.dart';
 import 'package:provider/provider.dart';
 
 import 'pages/config/presentation/bloc/config_event.dart';
@@ -24,18 +24,18 @@ void main() async {
         providers: [
           BlocProvider<ConfigBloc>(
             create: (context) => ConfigBloc(
-              parkingConfigRepository: ParkingConfigRepository(
+              parkingConfigRepository: ParkingConfigRepositoryImpl(
                 parkingConfigDAO: parkingConfigDAO,
               ),
             )..add(IsAlreadyConfigured()),
           ),
-          RepositoryProvider<ParkingConfigRepository>(
-            create: (context) => ParkingConfigRepository(
+          RepositoryProvider<ParkingConfigRepositoryImpl>(
+            create: (context) => ParkingConfigRepositoryImpl(
               parkingConfigDAO: parkingConfigDAO,
             ),
           ),
-          RepositoryProvider<ParkingSpaceRepository>(
-            create: (context) => ParkingSpaceRepository(
+          RepositoryProvider<ParkingSpaceRepositoryImpl>(
+            create: (context) => ParkingSpaceRepositoryImpl(
               parkingSpaceDAO: ParkingSpaceDaoImpl(
                 _database,
               ),

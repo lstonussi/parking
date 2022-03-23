@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:parking/domain/models/parking_space_model.dart';
 import 'package:parking/pages/home/presentation/bloc/_bloc.dart';
-import 'package:parking/repositories/parking_space_repository.dart';
+import 'package:parking/pages/home/data/repositories/parking_space_repository_impl.dart';
 
 enum TypeView {
   compact,
@@ -18,13 +18,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<ChangeView>(_onChangeView);
   }
 
-  final ParkingSpaceRepository parkingSpaceRepository;
+  final ParkingSpaceRepositoryImpl parkingSpaceRepository;
 
   Future<void> _onNewCar(NewCarEntry event, Emitter<HomeState> emit) async {
     emit(Loading());
 
     final resultOrFailure = await parkingSpaceRepository.insert(
-      ParkingSpaceModel(
+      parkingConfig: ParkingSpaceModel(
         plate: event.plate,
         modelCar: event.modelCar,
         spaceParkingCode: event.spaceParkingCode,
@@ -52,7 +52,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       DepartureCar event, Emitter<HomeState> emit) async {
     emit(Loading());
     final resultOrFailure = await parkingSpaceRepository.updateDate(
-      ParkingSpaceModel(
+      parkingSpaceModel: ParkingSpaceModel(
         id: event.id,
         plate: 'plate',
         spaceParkingCode: 0,

@@ -6,7 +6,6 @@ import 'package:parking/commons/button_widget.dart';
 import 'package:parking/domain/models/parking_space_model.dart';
 import 'package:parking/pages/home/presentation/bloc/_bloc.dart';
 import 'package:parking/utils/validators.dart';
-import 'package:parking/values/app_texts.dart';
 import 'package:provider/provider.dart';
 
 void showDepartureBottomSheet({

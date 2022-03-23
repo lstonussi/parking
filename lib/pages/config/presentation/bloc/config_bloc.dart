@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:parking/pages/config/data/repositories/parking_config_repository_impl.dart';
 import 'package:parking/pages/config/presentation/bloc/_bloc.dart';
-import 'package:parking/repositories/parking_config_repository.dart';
 
 class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
   ConfigBloc({
@@ -10,7 +10,7 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
     on<SaveConfigForm>(_onSavedForm);
   }
 
-  final ParkingConfigRepository parkingConfigRepository;
+  final ParkingConfigRepositoryImpl parkingConfigRepository;
 
   Future<void> _onSavedForm(
       SaveConfigForm event, Emitter<ConfigState> emit) async {
