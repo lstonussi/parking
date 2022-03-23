@@ -50,15 +50,15 @@ class ParkingSpaceDaoImpl extends DatabaseAccessor<Database>
   }
 
   @override
-  Future<int> insert(ParkingSpaceModel parkingLot) async {
+  Future<int> insert(ParkingSpaceModel parkingSpaceModel) async {
     try {
       return await into(parkingSpace).insertOnConflictUpdate(
         ParkingSpaceCompanion.insert(
-          plate: parkingLot.plate,
-          modelCar: parkingLot.modelCar,
-          spaceParkingCode: parkingLot.spaceParkingCode,
-          entryDateTime: parkingLot.entryDateTime,
-          departureDateTime: Value(parkingLot.departureDateTime),
+          plate: parkingSpaceModel.plate,
+          modelCar: parkingSpaceModel.modelCar,
+          spaceParkingCode: parkingSpaceModel.spaceParkingCode,
+          entryDateTime: parkingSpaceModel.entryDateTime,
+          departureDateTime: Value(parkingSpaceModel.departureDateTime),
         ),
       );
     } on SqliteException {

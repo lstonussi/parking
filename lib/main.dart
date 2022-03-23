@@ -13,7 +13,6 @@ import 'pages/config/presentation/bloc/config_event.dart';
 import 'pages/home/presentation/notifiers/parking_space_notifier.dart';
 
 void main() async {
-  // final dbPath = await DatabaseUtil.instance.getDBPath();
   final _database = Database.instance;
   final parkingConfigDAO = ParkingConfigDaoImpl(
     _database,

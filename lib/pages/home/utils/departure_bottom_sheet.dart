@@ -2,6 +2,7 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:parking/commons/button_widget.dart';
 import 'package:parking/domain/models/parking_space_model.dart';
 import 'package:parking/pages/home/presentation/bloc/_bloc.dart';
 import 'package:parking/utils/validators.dart';
@@ -34,7 +35,7 @@ void showDepartureBottomSheet({
               key: _formKey,
               child: Container(
                 padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom + 100,
+                  bottom: MediaQuery.of(context).viewInsets.bottom + 500,
                 ),
                 child: Column(
                   children: [
@@ -71,31 +72,22 @@ void showDepartureBottomSheet({
                         }
                       },
                     ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.amber,
-                        fixedSize: const Size(81, 48),
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      onPressed: () async {
-                        if (_formKey.currentState?.validate() ?? false) {
-                          _bloc.add(
-                            DepartureCar(
-                              id: parkingSpace.id!,
-                              departureDateTime:
-                                  dateFormat.parse(_departureController.text),
-                            ),
-                          );
-                          _departureController.clear();
-                          Navigator.pop(context);
-                        }
-                      },
-                      child: const Text(
-                        AppTexts.save,
-                        style: TextStyle(color: Colors.red),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: ButtonWidget(
+                        onPressed: () {
+                          if (_formKey.currentState?.validate() ?? false) {
+                            _bloc.add(
+                              DepartureCar(
+                                id: parkingSpace.id!,
+                                departureDateTime:
+                                    dateFormat.parse(_departureController.text),
+                              ),
+                            );
+                            _departureController.clear();
+                            Navigator.pop(context);
+                          }
+                        },
                       ),
                     )
                   ],

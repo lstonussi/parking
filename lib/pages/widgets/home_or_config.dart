@@ -30,13 +30,12 @@ class HomeOrConfig extends StatelessWidget {
                 parkingSpaceRepository: ParkingSpaceRepository(
                   parkingSpaceDAO: ParkingSpaceDaoImpl(Database.instance),
                 ),
-              )..add(homebloc.RefreshList()),
+              )..add(const homebloc.RefreshList()),
               child: HomePage(
                 name: state.name,
                 quantitySpace: state.quantitySpace,
               ),
             );
-          } else if (state is Saved) {
           } else if (state is SaveError || state is Error) {
             const Material(
               child: Center(

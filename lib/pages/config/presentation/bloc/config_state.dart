@@ -11,8 +11,6 @@ class Idle extends ConfigState {}
 
 class Loading extends ConfigState {}
 
-class Saved extends ConfigState {}
-
 class SaveError extends ConfigState {}
 
 class Error extends ConfigState {}

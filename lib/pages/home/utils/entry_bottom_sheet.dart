@@ -1,7 +1,9 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:parking/commons/button_widget.dart';
 import 'package:parking/pages/home/presentation/bloc/_bloc.dart';
 import 'package:parking/pages/home/presentation/notifiers/parking_space_notifier.dart';
 import 'package:parking/utils/validators.dart';
@@ -45,7 +47,7 @@ void showEntryBottomSheet({
               key: _formKey,
               child: Container(
                 padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom + 100,
+                  bottom: MediaQuery.of(context).viewInsets.bottom + 500,
                 ),
                 child: Column(
                   children: [
@@ -110,16 +112,9 @@ void showEntryBottomSheet({
                             return currentValue;
                           }
                         }),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.amber,
-                        fixedSize: const Size(81, 48),
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      onPressed: () async {
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: ButtonWidget(onPressed: () async {
                         if (_formKey.currentState?.validate() ?? false) {
                           if (parkingNotifier.verifyParkingSpace(
                                   index: int.parse(
@@ -152,11 +147,7 @@ void showEntryBottomSheet({
                           _spaceParkingCodeController.clear();
                           Navigator.pop(context);
                         }
-                      },
-                      child: const Text(
-                        AppTexts.save,
-                        style: TextStyle(color: Colors.red),
-                      ),
+                      }),
                     )
                   ],
                 ),

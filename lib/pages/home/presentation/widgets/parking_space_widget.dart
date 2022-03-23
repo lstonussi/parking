@@ -47,11 +47,10 @@ class ParkingSpace extends StatelessWidget {
             ? Padding(
                 padding: const EdgeInsets.all(2.0),
                 child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      '${index + 1}',
+                      'Vaga Nº: ${index + 1}',
                       style: isCompact
                           ? Theme.of(context).textTheme.bodyText1
                           : Theme.of(context).textTheme.headline6,
@@ -108,7 +107,7 @@ class ParkingSpace extends StatelessWidget {
               )
             : Center(
                 child: Text(
-                  '${index + 1}',
+                  'Vaga Nº: ${index + 1}',
                   style: isCompact
                       ? Theme.of(context).textTheme.bodyText1
                       : Theme.of(context).textTheme.headline6,

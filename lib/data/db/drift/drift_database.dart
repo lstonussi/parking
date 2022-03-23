@@ -16,6 +16,9 @@ part 'drift_database.g.dart';
   ],
 )
 class Database extends _$Database {
+  @visibleForTesting
+  Database(QueryExecutor e) : super(e);
+
   Database._() : super(openConnection());
 
   // Database.connect(DatabaseConnection c) : super.connect(c);
