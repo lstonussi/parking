@@ -4,7 +4,7 @@ import 'package:parking/domain/models/parking_space_model.dart';
 
 abstract class ParkingSpaceRepository {
   Future<Either<Failure, int>> insert(
-      {required ParkingSpaceModel parkingConfig});
+      {required ParkingSpaceModel parkingSpaceModel});
 
   Future<Either<Failure, int>> updateDate(
       {required ParkingSpaceModel parkingSpaceModel});

@@ -13,9 +13,9 @@ class ParkingSpaceRepositoryImpl implements ParkingSpaceRepository {
 
   @override
   Future<Either<Failure, int>> insert(
-      {required ParkingSpaceModel parkingConfig}) async {
+      {required ParkingSpaceModel parkingSpaceModel}) async {
     try {
-      final result = await parkingSpaceDAO.insert(parkingConfig);
+      final result = await parkingSpaceDAO.insert(parkingSpaceModel);
       return Right(result);
     } on InsertException {
       return Left(InsertDataBaseFailure());

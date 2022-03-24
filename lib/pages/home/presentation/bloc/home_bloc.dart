@@ -24,7 +24,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(Loading());
 
     final resultOrFailure = await parkingSpaceRepository.insert(
-      parkingConfig: ParkingSpaceModel(
+      parkingSpaceModel: ParkingSpaceModel(
         plate: event.plate,
         modelCar: event.modelCar,
         spaceParkingCode: event.spaceParkingCode,
