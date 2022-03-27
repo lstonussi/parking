@@ -4,6 +4,7 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:parking/main.dart' as app;
 import 'package:parking/pages/home/presentation/widgets/parking_space_grid_widget.dart';
+import 'package:parking/values/app_texts.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -67,6 +68,7 @@ void main() {
       await tester.tap(saveEntryKey);
       await tester.pumpAndSettle();
 
+      // await Future.delayed(const Duration(milliseconds: 2000));
       //Scroll until find
       final parkingSpace18 = find.byKey(const Key('ParkingSpaceColor18'));
       final listFinder = find.byType(Scrollable);
@@ -76,7 +78,7 @@ void main() {
         500.0,
         scrollable: listFinder,
       );
-      await Future.delayed(const Duration(milliseconds: 2000));
+      // await Future.delayed(const Duration(milliseconds: 2000));
 
       //Insert3
       await tester.tap(parkingSpace18);
@@ -94,14 +96,15 @@ void main() {
           find.byKey(const Key('HomePageIconButtonTextIncrease'));
       await tester.tap(increaseTextFinder);
       await tester.pumpAndSettle();
-      await Future.delayed(const Duration(milliseconds: 2000));
+      // await Future.delayed(const Duration(milliseconds: 2000));
       await tester.tap(increaseTextFinder);
       await tester.pumpAndSettle();
-      await Future.delayed(const Duration(milliseconds: 2000));
+      // await Future.delayed(const Duration(milliseconds: 2000));
 
       //Insert new car through add button
       final homePageAddButton = find.byKey(const Key('HomePageIconButtonAdd'));
       await tester.tap(homePageAddButton);
+      await tester.pumpAndSettle();
       await tester.tap(entryBottomSheetPlate);
       await tester.enterText(entryBottomSheetPlate, 'DDD2345');
       await tester.tap(entryBottomSheetParkingCode);
@@ -112,23 +115,34 @@ void main() {
       await tester.tap(saveEntryKey);
       await tester.pumpAndSettle();
 
-      //Insert new car in occupied parking space through add button
-      // await tester.tap(homePageAddButton);
-      // await tester.tap(entryBottomSheetPlate);
-      // await tester.enterText(entryBottomSheetPlate, 'EEE9393');
-      // await tester.tap(entryBottomSheetParkingCode);
-      // await tester.enterText(entryBottomSheetParkingCode, '5');
-      // await tester.pumpAndSettle();
-      // await tester.enterText(entryBottomSheetModelCar, 'Peugeout');
-      // await tester.pumpAndSettle();
-      // await tester.tap(saveEntryKey);
-      // await tester.pumpAndSettle();
+      // Insert new car in occupied parking space through add button
+      await tester.tap(homePageAddButton);
+      await tester.pumpAndSettle();
+      await tester.tap(entryBottomSheetPlate);
+      await tester.enterText(entryBottomSheetPlate, 'EEE9393');
+      await tester.tap(entryBottomSheetParkingCode);
+      await tester.enterText(entryBottomSheetParkingCode, '6');
+      await tester.pumpAndSettle();
+      await tester.enterText(entryBottomSheetModelCar, 'Peugeout');
+      await tester.pumpAndSettle();
+      await tester.tap(saveEntryKey);
+      await tester.pumpAndSettle();
+
+      // await Future.delayed(const Duration(milliseconds: 2000));
+      expect(find.text(AppTexts.parkingSpaceOccupied), findsOneWidget);
+
+      await tester.tap(find.text(AppTexts.parkingSpaceOccupied));
+      await tester.tap(entryBottomSheetParkingCode);
+      await tester.enterText(entryBottomSheetParkingCode, '7');
+      await tester.pumpAndSettle();
+      await tester.tap(saveEntryKey);
+      await tester.pumpAndSettle();
       //Go to report page
       final reportPageButtonFinder =
           find.byKey(const Key('HomePageIconButtonReport'));
       await tester.tap(reportPageButtonFinder);
       await tester.pumpAndSettle();
-      await Future.delayed(const Duration(milliseconds: 2000));
+      // await Future.delayed(const Duration(milliseconds: 2000));
     },
   );
 }
