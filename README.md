@@ -1,16 +1,22 @@
 # parking
 
-A new Flutter project.
+A project with Integration test, bloc test and unit test.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Test Coverage:
 
-A few resources to get you started if this is your first Flutter project:
+To run the coverage it is necessary to run this command in the root of the project (lcov required): 
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+```flutter test --coverage && genhtml -o coverage coverage/lcov.info```
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img width="907" alt="image" src="https://user-images.githubusercontent.com/21263146/160305846-c938010e-d00e-47f2-9fdc-e05ab2f5ead6.png">
+
+
+Integration Test:
+
+To run the integration test it is necessary to run this command in the root of the project: 
+
+```flutter drive --debug --driver=test_driver/integration_test.dart --target=integration_test/e2e_test.dart```
+
+![integration_test](https://user-images.githubusercontent.com/21263146/160306321-72d1c3a7-9b82-4827-a0cc-4b92aefcdd76.gif)
