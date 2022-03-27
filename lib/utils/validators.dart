@@ -7,8 +7,8 @@ String? validateFormEmptyText(String? value) {
 
 String? validateFormQuantity(String? value) {
   final quantity = int.tryParse(value!) ?? 0;
-  if (quantity == 0 || quantity > 100) {
-    return 'Informe um valor entre 1 e 100';
+  if (quantity == 0 || quantity > 1000) {
+    return 'Informe um valor entre 1 e 1000';
   }
   return null;
 }
