@@ -23,8 +23,6 @@ import 'home_page_test.mocks.dart';
 
 DateFormat dateFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
 
-class MockContext extends Mock implements BuildContext {}
-
 @GenerateMocks([
   // ParkingSpaceNotifier,
   ParkingSpaceDAO,
@@ -38,7 +36,7 @@ late MockParkingSpaceDAO mockParkingSpaceDAO;
 const tPlate = 'AAA1234';
 const tModelCar = 'Mustang';
 const tSpaceParkingCode = 1;
-const tEntryDateTime = '26/03/2022 12:53:45';
+const _tEntryDateTime = '26/03/2022 12:53:45';
 const tDepartureHour = '26/03/2022 20:04:12';
 
 const tQuantitySpace = 20;
@@ -47,7 +45,7 @@ final tParkingSpace = ParkingSpaceModel(
   plate: tPlate,
   spaceParkingCode: tSpaceParkingCode,
   modelCar: tModelCar,
-  entryDateTime: dateFormat.parse(tEntryDateTime),
+  entryDateTime: dateFormat.parse(_tEntryDateTime),
 );
 void main() {
   // TestWidgetsFlutterBinding.ensureInitialized();

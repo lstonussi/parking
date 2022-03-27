@@ -7,7 +7,7 @@ abstract class ParkingSpaceRepository {
       {required ParkingSpaceModel parkingSpaceModel});
 
   Future<Either<Failure, int>> updateDate(
-      {required ParkingSpaceModel parkingSpaceModel});
+      {required int id, required DateTime departureTime});
 
   Future<Either<Failure, List<ParkingSpaceModel>>> getAll();
 

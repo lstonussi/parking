@@ -17,7 +17,6 @@ class HomeOrConfig extends StatelessWidget {
         builder: (context, state) {
           if (state is Loading) {
             return const Center(
-              //TODO: Should replacing to toast
               child: CircularProgressIndicator(),
             );
           } else if (state is NotConfigured) {
@@ -41,7 +40,7 @@ class HomeOrConfig extends StatelessWidget {
           }
           return const Material(
             child: Center(
-              child: Text('Error'),
+              child: CircularProgressIndicator(),
             ),
           );
         },

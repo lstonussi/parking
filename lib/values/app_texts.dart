@@ -14,4 +14,5 @@ class AppTexts {
   static const report = 'Relatório';
   static const id = 'ID';
   static const parkingSpaceOccupied = 'Vaga Ocupada';
+  static const wantToExitTheCar = 'Deseja dar saída no carro com a placa:';
 }

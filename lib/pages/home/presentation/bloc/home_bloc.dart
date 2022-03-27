@@ -52,14 +52,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       DepartureCar event, Emitter<HomeState> emit) async {
     emit(Loading());
     final resultOrFailure = await parkingSpaceRepository.updateDate(
-      parkingSpaceModel: ParkingSpaceModel(
-        id: event.id,
-        plate: 'plate',
-        spaceParkingCode: 0,
-        modelCar: 'modelCar',
-        entryDateTime: DateTime.now(),
-        departureDateTime: event.departureDateTime,
-      ),
+      id: event.id,
+      departureTime: event.departureDateTime,
     );
     emit(
       resultOrFailure.fold(

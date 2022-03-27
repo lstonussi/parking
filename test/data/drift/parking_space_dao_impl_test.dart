@@ -47,7 +47,7 @@ void main() {
     () async {
       listParkingSpaceModel = await parkingSpaceDaoImpl.getAll();
       expect(listParkingSpaceModel.isEmpty, true);
-      await parkingSpaceDaoImpl.insert(tParkingSpace);
+      await parkingSpaceDaoImpl.insert(parkingSpaceModel: tParkingSpace);
       listParkingSpaceModel = await parkingSpaceDaoImpl.getAll();
       expect(listParkingSpaceModel.isEmpty, false);
       expect(listParkingSpaceModel.length, 1);
@@ -62,8 +62,8 @@ void main() {
       listParkingSpaceModel = await parkingSpaceDaoImpl.getAll();
       expect(listParkingSpaceModel.isEmpty, true);
 
-      await parkingSpaceDaoImpl.insert(tParkingSpace);
-      await parkingSpaceDaoImpl.insert(tParkingSpace1);
+      await parkingSpaceDaoImpl.insert(parkingSpaceModel: tParkingSpace);
+      await parkingSpaceDaoImpl.insert(parkingSpaceModel: tParkingSpace1);
       listParkingSpaceModel = await parkingSpaceDaoImpl.getAll();
 
       expect(listParkingSpaceModel.isEmpty, false);
@@ -78,14 +78,15 @@ void main() {
   test(
     'Should update departure date parking space',
     () async {
-      final tId = await parkingSpaceDaoImpl.insert(tParkingSpace);
+      final tId = await parkingSpaceDaoImpl.insert(
+        parkingSpaceModel: tParkingSpace,
+      );
       listParkingSpaceModel = await parkingSpaceDaoImpl.getAll();
       expect(listParkingSpaceModel.length, 1);
       expect(listParkingSpaceModel[0].departureDateTime == null, true);
 
-      final tParkingSpaceUpdated =
-          tParkingSpace.copyWith(id: tId, departureDateTime: DateTime.now());
-      await parkingSpaceDaoImpl.updateDate(tParkingSpaceUpdated);
+      await parkingSpaceDaoImpl.updateDate(
+          id: tId, departureTime: DateTime.now());
 
       listParkingSpaceModel = await parkingSpaceDaoImpl.getAll();
       expect(listParkingSpaceModel.length, 1);

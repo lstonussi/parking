@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/intl.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:parking/commons/error/exception.dart';
@@ -15,6 +16,9 @@ import 'parking_space_repository_impl_test.mocks.dart';
 void main() {
   late ParkingSpaceRepository parkingSpaceRepository;
   late ParkingSpaceDAO mockParkingSpaceDAO;
+
+  const tDepartureHour = '26/03/2022 20:04:12';
+  DateFormat dateFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
 
   const tId = 1;
   const tSpaceParkingCode = 1;
@@ -56,7 +60,7 @@ void main() {
       test('Should insert a parking space', () async {
         when(
           mockParkingSpaceDAO.insert(
-            tParkingSpaceModel,
+            parkingSpaceModel: tParkingSpaceModel,
           ),
         ).thenAnswer(
           (invocation) => Future.value(1),
@@ -72,7 +76,7 @@ void main() {
         () async {
           when(
             mockParkingSpaceDAO.insert(
-              tParkingSpaceModel,
+              parkingSpaceModel: tParkingSpaceModel,
             ),
           ).thenThrow(
             InsertException(),
@@ -89,7 +93,7 @@ void main() {
         () async {
           when(
             mockParkingSpaceDAO.insert(
-              tParkingSpaceModel,
+              parkingSpaceModel: tParkingSpaceModel,
             ),
           ).thenThrow(
             GenericException(message: 'GenericException'),
@@ -145,6 +149,75 @@ void main() {
           );
 
           final resultOrFailure = await parkingSpaceRepository.getAll();
+
+          expect(resultOrFailure.isLeft(), isTrue);
+        },
+      );
+    },
+  );
+  group(
+    'Update datetime parking space',
+    () {
+      test(
+        'Should update a parking space',
+        () async {
+          when(
+            mockParkingSpaceDAO.updateDate(
+              id: tId,
+              departureTime: dateFormat.parse(tDepartureHour),
+            ),
+          ).thenAnswer(
+            (invocation) => Future.value(1),
+          );
+
+          final resultOrFailure = await parkingSpaceRepository.updateDate(
+            id: tId,
+            departureTime: dateFormat.parse(tDepartureHour),
+          );
+
+          expect(resultOrFailure.isRight(), isTrue);
+        },
+      );
+      test(
+        'Should update a parking space with error',
+        () async {
+          when(
+            mockParkingSpaceDAO.updateDate(
+              id: tId,
+              departureTime: dateFormat.parse(tDepartureHour),
+            ),
+          ).thenThrow(UpdateException);
+
+          final resultOrFailure = await parkingSpaceRepository.updateDate(
+            id: tId,
+            departureTime: dateFormat.parse(tDepartureHour),
+          );
+
+          expect(resultOrFailure.isLeft(), isTrue);
+        },
+      );
+      test(
+        'Should delete a parking',
+        () async {
+          when(
+            mockParkingSpaceDAO.deleteAll(),
+          ).thenAnswer(
+            (realInvocation) => Future.value(1),
+          );
+
+          final resultOrFailure = await parkingSpaceRepository.deleteAll();
+
+          expect(resultOrFailure.isRight(), isTrue);
+        },
+      );
+      test(
+        'Should delete a parking space with error',
+        () async {
+          when(
+            mockParkingSpaceDAO.deleteAll(),
+          ).thenThrow(DeleteException());
+
+          final resultOrFailure = await parkingSpaceRepository.deleteAll();
 
           expect(resultOrFailure.isLeft(), isTrue);
         },

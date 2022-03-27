@@ -50,7 +50,7 @@ class ParkingSpaceDaoImpl extends DatabaseAccessor<Database>
   }
 
   @override
-  Future<int> insert(ParkingSpaceModel parkingSpaceModel) async {
+  Future<int> insert({required ParkingSpaceModel parkingSpaceModel}) async {
     try {
       return await into(parkingSpace).insertOnConflictUpdate(
         ParkingSpaceCompanion.insert(
@@ -80,7 +80,10 @@ class ParkingSpaceDaoImpl extends DatabaseAccessor<Database>
   }
 
   @override
-  Future<int> updateDate(ParkingSpaceModel parkingSpaceModel) async {
+  Future<int> updateDate({
+    required int id,
+    required DateTime departureTime,
+  }) async {
     try {
       return await customUpdate(
         'UPDATE parking_space SET departure_date_time = ? WHERE id = ?',
@@ -88,13 +91,11 @@ class ParkingSpaceDaoImpl extends DatabaseAccessor<Database>
           parkingSpace,
         },
         variables: [
-          Variable(parkingSpaceModel.departureDateTime),
-          Variable(parkingSpaceModel.id),
+          Variable(departureTime),
+          Variable(id),
         ],
         updateKind: UpdateKind.update,
       );
-    } on SqliteException {
-      throw UpdateException();
     } catch (e) {
       throw GenericException(message: e.toString());
     }

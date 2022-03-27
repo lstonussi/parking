@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntry">5</td>
             <td class="headerCovTableEntry">7</td>
-            <td class="headerCovTableEntryLo">42.9 %</td>
+            <td class="headerCovTableEntryLo">71.4 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-03-27 02:12:40</td>
+            <td class="headerValue">2022-03-27 18:59:32</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -64,14 +64,14 @@
 <a name="2"><span class="lineNum">       2 </span>            : import 'package:parking/pages/home/presentation/bloc/home_bloc.dart';</a>
 <a name="3"><span class="lineNum">       3 </span>            : </a>
 <a name="4"><span class="lineNum">       4 </span>            : abstract class HomeEvent extends Equatable {</a>
-<a name="5"><span class="lineNum">       5 </span><span class="lineCov">          5 :   const HomeEvent();</span></a>
+<a name="5"><span class="lineNum">       5 </span><span class="lineCov">          7 :   const HomeEvent();</span></a>
 <a name="6"><span class="lineNum">       6 </span>            : </a>
 <a name="7"><span class="lineNum">       7 </span><span class="lineNoCov">          0 :   @override</span></a>
 <a name="8"><span class="lineNum">       8 </span><span class="lineNoCov">          0 :   List&lt;Object&gt; get props =&gt; [];</span></a>
 <a name="9"><span class="lineNum">       9 </span>            : }</a>
 <a name="10"><span class="lineNum">      10 </span>            : </a>
 <a name="11"><span class="lineNum">      11 </span>            : class NewCarEntry extends HomeEvent {</a>
-<a name="12"><span class="lineNum">      12 </span><span class="lineNoCov">          0 :   const NewCarEntry({</span></a>
+<a name="12"><span class="lineNum">      12 </span><span class="lineCov">          1 :   const NewCarEntry({</span></a>
 <a name="13"><span class="lineNum">      13 </span>            :     required this.plate,</a>
 <a name="14"><span class="lineNum">      14 </span>            :     required this.modelCar,</a>
 <a name="15"><span class="lineNum">      15 </span>            :     required this.spaceParkingCode,</a>
@@ -84,7 +84,7 @@
 <a name="22"><span class="lineNum">      22 </span>            : }</a>
 <a name="23"><span class="lineNum">      23 </span>            : </a>
 <a name="24"><span class="lineNum">      24 </span>            : class DepartureCar extends HomeEvent {</a>
-<a name="25"><span class="lineNum">      25 </span><span class="lineNoCov">          0 :   const DepartureCar({</span></a>
+<a name="25"><span class="lineNum">      25 </span><span class="lineCov">          1 :   const DepartureCar({</span></a>
 <a name="26"><span class="lineNum">      26 </span>            :     required this.id,</a>
 <a name="27"><span class="lineNum">      27 </span>            :     required this.departureDateTime,</a>
 <a name="28"><span class="lineNum">      28 </span>            :   });</a>
@@ -100,7 +100,7 @@
 <a name="38"><span class="lineNum">      38 </span>            : }</a>
 <a name="39"><span class="lineNum">      39 </span>            : </a>
 <a name="40"><span class="lineNum">      40 </span>            : class RefreshList extends HomeEvent {</a>
-<a name="41"><span class="lineNum">      41 </span><span class="lineCov">          5 :   const RefreshList({this.typeView});</span></a>
+<a name="41"><span class="lineNum">      41 </span><span class="lineCov">          6 :   const RefreshList({this.typeView});</span></a>
 <a name="42"><span class="lineNum">      42 </span>            :   final TypeView? typeView;</a>
 <a name="43"><span class="lineNum">      43 </span>            : }</a>
 </pre>

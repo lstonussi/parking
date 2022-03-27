@@ -6,6 +6,7 @@ import 'package:parking/commons/button_widget.dart';
 import 'package:parking/domain/models/parking_space_model.dart';
 import 'package:parking/pages/home/presentation/bloc/_bloc.dart';
 import 'package:parking/utils/validators.dart';
+import 'package:parking/values/app_texts.dart';
 import 'package:provider/provider.dart';
 
 void showDepartureBottomSheet({
@@ -41,7 +42,7 @@ void showDepartureBottomSheet({
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        'Deseja dar saída no carro com a placa: ${parkingSpace!.plate}?',
+                        '${AppTexts.wantToExitTheCar} ${parkingSpace!.plate}?',
                         style: Theme.of(context).textTheme.headline6,
                       ),
                     ),
@@ -74,6 +75,7 @@ void showDepartureBottomSheet({
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: ButtonWidget(
+                        key: const Key('DepartureSaveKey'),
                         onPressed: () {
                           if (_formKey.currentState?.validate() ?? false) {
                             _bloc.add(

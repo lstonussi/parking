@@ -15,7 +15,8 @@ class ParkingSpaceRepositoryImpl implements ParkingSpaceRepository {
   Future<Either<Failure, int>> insert(
       {required ParkingSpaceModel parkingSpaceModel}) async {
     try {
-      final result = await parkingSpaceDAO.insert(parkingSpaceModel);
+      final result =
+          await parkingSpaceDAO.insert(parkingSpaceModel: parkingSpaceModel);
       return Right(result);
     } on InsertException {
       return Left(InsertDataBaseFailure());
@@ -25,10 +26,13 @@ class ParkingSpaceRepositoryImpl implements ParkingSpaceRepository {
   }
 
   @override
-  Future<Either<Failure, int>> updateDate(
-      {required ParkingSpaceModel parkingSpaceModel}) async {
+  Future<Either<Failure, int>> updateDate({
+    required int id,
+    required DateTime departureTime,
+  }) async {
     try {
-      final result = await parkingSpaceDAO.updateDate(parkingSpaceModel);
+      final result = await parkingSpaceDAO.updateDate(
+          id: id, departureTime: departureTime);
       return Right(result);
     } on UpdateException {
       return Left(UpdateDataBaseFailure());

@@ -27,12 +27,16 @@ class MockParkingSpaceDAO extends _i1.Mock implements _i2.ParkingSpaceDAO {
   }
 
   @override
-  _i3.Future<int> insert(_i4.ParkingSpaceModel? parkingSpaceModel) =>
-      (super.noSuchMethod(Invocation.method(#insert, [parkingSpaceModel]),
+  _i3.Future<int> insert({_i4.ParkingSpaceModel? parkingSpaceModel}) =>
+      (super.noSuchMethod(
+          Invocation.method(
+              #insert, [], {#parkingSpaceModel: parkingSpaceModel}),
           returnValue: Future<int>.value(0)) as _i3.Future<int>);
   @override
-  _i3.Future<int> updateDate(_i4.ParkingSpaceModel? parkingSpaceModel) =>
-      (super.noSuchMethod(Invocation.method(#updateDate, [parkingSpaceModel]),
+  _i3.Future<int> updateDate({int? id, DateTime? departureTime}) =>
+      (super.noSuchMethod(
+          Invocation.method(
+              #updateDate, [], {#id: id, #departureTime: departureTime}),
           returnValue: Future<int>.value(0)) as _i3.Future<int>);
   @override
   _i3.Future<List<_i4.ParkingSpaceModel>> getAll() =>
