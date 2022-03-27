@@ -1,13 +1,17 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 import 'package:parking/commons/error/exception.dart';
 import 'package:parking/data/db/dao/parking_dao.dart';
 import 'package:parking/domain/models/parking_config.dart';
 import 'package:parking/pages/config/data/repositories/parking_config_repository_impl.dart';
 import 'package:parking/pages/config/domain/repositories/parking_config_repository.dart';
 
-class MockParkingConfigDAO extends Mock implements ParkingConfigDAO {}
+import 'parking_config_repository_impl_test.mocks.dart';
 
+@GenerateMocks([
+  ParkingConfigDAO,
+])
 void main() {
   late ParkingConfigRepository parkingConfigRepository;
   late ParkingConfigDAO mockParkingConfigDAO;
@@ -27,7 +31,7 @@ void main() {
     () {
       test('Should insert a name and quantity of parking space', () async {
         when(
-          () => mockParkingConfigDAO.insert(
+          mockParkingConfigDAO.insert(
             name: tName,
             quantitySpace: tQuantitySpace,
           ),
@@ -46,7 +50,7 @@ void main() {
         'Should trying insert, but, return a InsertException',
         () async {
           when(
-            () => mockParkingConfigDAO.insert(
+            mockParkingConfigDAO.insert(
               name: tName,
               quantitySpace: tQuantitySpace,
             ),
@@ -66,7 +70,7 @@ void main() {
         'Should trying insert, but, return a GenericException',
         () async {
           when(
-            () => mockParkingConfigDAO.insert(
+            mockParkingConfigDAO.insert(
               name: tName,
               quantitySpace: tQuantitySpace,
             ),
@@ -89,7 +93,7 @@ void main() {
     () {
       test('Should return a parking config', () async {
         when(
-          () => mockParkingConfigDAO.getConfig(),
+          mockParkingConfigDAO.getConfig(),
         ).thenAnswer(
           (invocation) => Future.value(
             const ParkingConfig(
@@ -108,7 +112,7 @@ void main() {
         'Should return a parking config, but, return a SelectException',
         () async {
           when(
-            () => mockParkingConfigDAO.getConfig(),
+            mockParkingConfigDAO.getConfig(),
           ).thenThrow(
             SelectException(),
           );
@@ -122,7 +126,7 @@ void main() {
         'Should return a parking config, but, return a GenericException',
         () async {
           when(
-            () => mockParkingConfigDAO.getConfig(),
+            mockParkingConfigDAO.getConfig(),
           ).thenThrow(
             GenericException(message: 'GenericException'),
           );

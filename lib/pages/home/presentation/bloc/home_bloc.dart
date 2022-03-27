@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:parking/domain/models/parking_space_model.dart';
+import 'package:parking/pages/home/domain/repositories/parking_space_repository.dart';
 import 'package:parking/pages/home/presentation/bloc/_bloc.dart';
-import 'package:parking/pages/home/data/repositories/parking_space_repository_impl.dart';
 
 enum TypeView {
   compact,
@@ -18,7 +18,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<ChangeView>(_onChangeView);
   }
 
-  final ParkingSpaceRepositoryImpl parkingSpaceRepository;
+  final ParkingSpaceRepository parkingSpaceRepository;
 
   Future<void> _onNewCar(NewCarEntry event, Emitter<HomeState> emit) async {
     emit(Loading());

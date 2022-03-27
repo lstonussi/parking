@@ -9,7 +9,9 @@ import 'package:parking/pages/config/data/repositories/parking_config_repository
 import 'package:parking/pages/home/data/repositories/parking_space_repository_impl.dart';
 import 'package:provider/provider.dart';
 
+import 'pages/config/domain/repositories/parking_config_repository.dart';
 import 'pages/config/presentation/bloc/config_event.dart';
+import 'pages/home/domain/repositories/parking_space_repository.dart';
 import 'pages/home/presentation/notifiers/parking_space_notifier.dart';
 
 void main() async {
@@ -29,12 +31,12 @@ void main() async {
               ),
             )..add(IsAlreadyConfigured()),
           ),
-          RepositoryProvider<ParkingConfigRepositoryImpl>(
+          RepositoryProvider<ParkingConfigRepository>(
             create: (context) => ParkingConfigRepositoryImpl(
               parkingConfigDAO: parkingConfigDAO,
             ),
           ),
-          RepositoryProvider<ParkingSpaceRepositoryImpl>(
+          RepositoryProvider<ParkingSpaceRepository>(
             create: (context) => ParkingSpaceRepositoryImpl(
               parkingSpaceDAO: ParkingSpaceDaoImpl(
                 _database,

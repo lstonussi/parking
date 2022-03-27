@@ -51,6 +51,7 @@ void showEntryBottomSheet({
                 child: Column(
                   children: [
                     TextFormField(
+                      key: const Key('EntryBottomSheetPlate'),
                       inputFormatters: [
                         UpperCaseTextFormatter(),
                       ],
@@ -65,6 +66,7 @@ void showEntryBottomSheet({
                       },
                     ),
                     TextFormField(
+                      key: const Key('EntryBottomSheetModelCar'),
                       focusNode: _modelCarFocus,
                       controller: _modelCarController,
                       keyboardType: TextInputType.name,
@@ -76,6 +78,7 @@ void showEntryBottomSheet({
                       },
                     ),
                     TextFormField(
+                      key: const Key('EntryBottomSheetParkingCode'),
                       focusNode: _spaceParkingCodeFocus,
                       controller: _spaceParkingCodeController,
                       keyboardType: TextInputType.number,
@@ -87,66 +90,72 @@ void showEntryBottomSheet({
                       },
                     ),
                     DateTimeField(
-                        focusNode: _entryHourFocus,
-                        controller: _entryHourController,
-                        validator: (value) {
-                          return validateFormEmptyText(value.toString());
-                        },
-                        format: DateFormat('dd/MM/yyyy HH:mm:ss'),
-                        onShowPicker: (BuildContext context,
-                            DateTime? currentValue) async {
-                          final date = await showDatePicker(
-                              context: context,
-                              firstDate: DateTime(1900),
-                              initialDate: currentValue ?? DateTime.now(),
-                              lastDate: DateTime(2100));
-                          if (date != null) {
-                            final time = await showTimePicker(
-                              context: context,
-                              initialTime: TimeOfDay.fromDateTime(
-                                  currentValue ?? DateTime.now()),
-                            );
-                            return DateTimeField.combine(date, time);
-                          } else {
-                            return currentValue;
-                          }
-                        }),
+                      key: const Key('EntryBottomSheetEntryHour'),
+                      focusNode: _entryHourFocus,
+                      controller: _entryHourController,
+                      validator: (value) {
+                        return validateFormEmptyText(value.toString());
+                      },
+                      format: DateFormat('dd/MM/yyyy HH:mm:ss'),
+                      onShowPicker:
+                          (BuildContext context, DateTime? currentValue) async {
+                        final date = await showDatePicker(
+                            context: context,
+                            firstDate: DateTime(1900),
+                            initialDate: currentValue ?? DateTime.now(),
+                            lastDate: DateTime(2100));
+                        if (date != null) {
+                          final time = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.fromDateTime(
+                                currentValue ?? DateTime.now()),
+                          );
+                          return DateTimeField.combine(date, time);
+                        } else {
+                          return currentValue;
+                        }
+                      },
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: ButtonWidget(onPressed: () async {
-                        if (_formKey.currentState?.validate() ?? false) {
-                          if (parkingNotifier.verifyParkingSpace(
-                                  index: int.parse(
-                                          _spaceParkingCodeController.text) -
-                                      1) >
-                              -1) {
-                            await showDialog(
-                              context: context,
-                              builder: (context) => const AlertDialog(
-                                content: Text("Vaga Ocupada"),
-                              ),
-                            );
-                            return;
-                          }
-                          _bloc.add(
-                            NewCarEntry(
-                              plate: _plateController.text,
-                              modelCar: _modelCarController.text,
-                              spaceParkingCode: int.parse(
-                                _spaceParkingCodeController.text,
-                              ),
-                              entryHour: dateFormat.parse(
-                                _entryHourController.text,
-                              ),
-                            ),
-                          );
-                          _plateController.clear();
-                          _modelCarController.clear();
-                          _entryHourController.clear();
-                          _spaceParkingCodeController.clear();
-                          Navigator.pop(context);
-                        }
-                      }),
+                      child: ButtonWidget(
+                          key: const Key('EntrySave'),
+                          onPressed: () async {
+                            if (_formKey.currentState?.validate() ?? false) {
+                              if (parkingNotifier.verifyParkingSpace(
+                                      index: int.parse(
+                                              _spaceParkingCodeController
+                                                  .text) -
+                                          1) >
+                                  -1) {
+                                await showDialog(
+                                  context: context,
+                                  builder: (context) => const AlertDialog(
+                                    content:
+                                        Text(AppTexts.parkingSpaceOccupied),
+                                  ),
+                                );
+                                return;
+                              }
+                              _bloc.add(
+                                NewCarEntry(
+                                  plate: _plateController.text,
+                                  modelCar: _modelCarController.text,
+                                  spaceParkingCode: int.parse(
+                                    _spaceParkingCodeController.text,
+                                  ),
+                                  entryHour: dateFormat.parse(
+                                    _entryHourController.text,
+                                  ),
+                                ),
+                              );
+                              _plateController.clear();
+                              _modelCarController.clear();
+                              _entryHourController.clear();
+                              _spaceParkingCodeController.clear();
+                              Navigator.pop(context);
+                            }
+                          }),
                     )
                   ],
                 ),

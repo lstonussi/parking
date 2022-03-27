@@ -13,4 +13,5 @@ class AppTexts {
   static const selectDateTime = 'Selecione a Data e Hora';
   static const report = 'Relatório';
   static const id = 'ID';
+  static const parkingSpaceOccupied = 'Vaga Ocupada';
 }

@@ -29,17 +29,20 @@ class HomePage extends StatelessWidget {
         title: Text(name),
         actions: [
           IconButton(
+              key: const Key('HomePageIconButtonAdd'),
               icon: const Icon(Icons.add),
               onPressed: () {
                 showEntryBottomSheet(context: context);
               }),
           IconButton(
+            key: const Key('HomePageIconButtonTextIncrease'),
             icon: const Icon(Icons.text_increase),
             onPressed: () {
               _bloc.add(ChangeView(typeView: typeView));
             },
           ),
           IconButton(
+            key: const Key('HomePageIconButtonReport'),
             icon: const Icon(Icons.insert_chart_outlined_sharp),
             onPressed: () {
               Navigator.push(

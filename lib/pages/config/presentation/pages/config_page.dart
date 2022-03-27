@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:parking/commons/button_widget.dart';
 import 'package:parking/pages/config/presentation/bloc/_bloc.dart';
 import 'package:parking/utils/validators.dart';
 import 'package:parking/values/app_texts.dart';
@@ -29,6 +30,7 @@ class ConfigPage extends StatelessWidget {
                 child: Column(
                   children: [
                     TextFormField(
+                      key: const Key('ConfigPageParkingName'),
                       focusNode: _nameFocus,
                       controller: _nameController,
                       decoration: const InputDecoration(
@@ -39,6 +41,7 @@ class ConfigPage extends StatelessWidget {
                       },
                     ),
                     TextFormField(
+                      key: const Key('ConfigPageParkingQuantity'),
                       focusNode: _quantityFocus,
                       controller: _quantityController,
                       keyboardType: TextInputType.number,
@@ -56,30 +59,18 @@ class ConfigPage extends StatelessWidget {
                 ),
               ),
             ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.amber,
-                fixedSize: const Size(81, 48),
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              onPressed: () {
-                if (_formKey.currentState?.validate() ?? false) {
-                  _bloc.add(
-                    SaveConfigForm(
-                      name: _nameController.text,
-                      quantitySpace: int.parse(_quantityController.text),
-                    ),
-                  );
-                }
-              },
-              child: const Text(
-                AppTexts.save,
-                style: TextStyle(color: Colors.red),
-              ),
-            )
+            ButtonWidget(
+                key: const Key('ConfigPageParkingSave'),
+                onPressed: () {
+                  if (_formKey.currentState?.validate() ?? false) {
+                    _bloc.add(
+                      SaveConfigForm(
+                        name: _nameController.text,
+                        quantitySpace: int.parse(_quantityController.text),
+                      ),
+                    );
+                  }
+                })
           ],
         ),
       ),

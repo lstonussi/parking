@@ -1,13 +1,17 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 import 'package:parking/commons/error/exception.dart';
 import 'package:parking/data/db/dao/parking_space_dao.dart';
 import 'package:parking/domain/models/parking_space_model.dart';
 import 'package:parking/pages/home/data/repositories/parking_space_repository_impl.dart';
 import 'package:parking/pages/home/domain/repositories/parking_space_repository.dart';
 
-class MockParkingSpaceDAO extends Mock implements ParkingSpaceDAO {}
+import 'parking_space_repository_impl_test.mocks.dart';
 
+@GenerateMocks([
+  ParkingSpaceDAO,
+])
 void main() {
   late ParkingSpaceRepository parkingSpaceRepository;
   late ParkingSpaceDAO mockParkingSpaceDAO;
@@ -51,7 +55,7 @@ void main() {
     () {
       test('Should insert a parking space', () async {
         when(
-          () => mockParkingSpaceDAO.insert(
+          mockParkingSpaceDAO.insert(
             tParkingSpaceModel,
           ),
         ).thenAnswer(
@@ -67,7 +71,7 @@ void main() {
         'Should trying insert, but, return a InsertException',
         () async {
           when(
-            () => mockParkingSpaceDAO.insert(
+            mockParkingSpaceDAO.insert(
               tParkingSpaceModel,
             ),
           ).thenThrow(
@@ -84,7 +88,7 @@ void main() {
         'Should trying insert, but, return a GenericException',
         () async {
           when(
-            () => mockParkingSpaceDAO.insert(
+            mockParkingSpaceDAO.insert(
               tParkingSpaceModel,
             ),
           ).thenThrow(
@@ -104,7 +108,7 @@ void main() {
     'Get parking space',
     () {
       test('Should return a parking space', () async {
-        when(() => mockParkingSpaceDAO.getAll()).thenAnswer(
+        when(mockParkingSpaceDAO.getAll()).thenAnswer(
           (invocation) => Future.value(
             [
               tParkingSpaceModel,
@@ -121,7 +125,7 @@ void main() {
         'Should return a parking space, but, return a SelectException',
         () async {
           when(
-            () => mockParkingSpaceDAO.getAll(),
+            mockParkingSpaceDAO.getAll(),
           ).thenThrow(
             SelectException(),
           );
@@ -135,7 +139,7 @@ void main() {
         'Should return a parking space, but, return a GenericException',
         () async {
           when(
-            () => mockParkingSpaceDAO.getAll(),
+            mockParkingSpaceDAO.getAll(),
           ).thenThrow(
             GenericException(message: 'GenericException'),
           );

@@ -37,6 +37,7 @@ class ParkingSpace extends StatelessWidget {
         }
       },
       child: Container(
+        key: Key('ParkingSpaceColor$index'),
         decoration: BoxDecoration(
           color: hasCar ? Colors.red : Colors.green,
           borderRadius: const BorderRadius.all(
